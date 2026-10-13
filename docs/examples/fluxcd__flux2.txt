@@ -1,0 +1,86 @@
+contribpolicy · fluxcd/flux2
+
+AI use               DISCLOSE  (AI assistance is allowed if you disclose it)
+Disclosure           required in: description, commit-trailer
+  example            "Assisted-by: copilot/gpt-5.4"
+Assisted-by trailer  required
+AI Co-authored-by    banned
+Human-only           review-replies
+Issue first          yes
+Assignment required  no
+Required labels      -
+DCO / CLA / signed   DCO yes  ·  CLA no  ·  signed+verified commits no
+UI screenshots       -
+
+Sources
+  [repo]         CONTRIBUTING.md
+                 https://github.com/fluxcd/flux2/blob/HEAD/CONTRIBUTING.md
+  [repo]         AGENTS.md
+                 https://github.com/fluxcd/flux2/blob/HEAD/AGENTS.md
+  [org registry] registry:fluxcd/.github:CONTRIBUTING.md  Flux organisation CONTRIBUTING (AI Coding Assistants Guidance)
+                 https://github.com/fluxcd/.github/blob/main/CONTRIBUTING.md
+
+Evidence
+  disclosure.required  (CONTRIBUTING.md:42)
+      "You should disclose the use of AI Agents in the description of your PR and in the commit message using
+      the `Assisted-by: AGENT_NAME/LLM_VERSION` tag."
+  disclosure.where.description  (CONTRIBUTING.md:42)
+      "You should disclose the use of AI Agents in the description of your PR and in the commit message using
+      the `Assisted-by: AGENT_NAME/LLM_VERSION` tag."
+  disclosure.where.commit-trailer  (CONTRIBUTING.md:42)
+      "You should disclose the use of AI Agents in the description of your PR and in the commit message using
+      the `Assisted-by: AGENT_NAME/LLM_VERSION` tag."
+  disclosure.where.commit-trailer  (CONTRIBUTING.md:54)
+      "Example of a commit message disclosing the use of AI assistance:"
+  disclosure.required  (AGENTS.md:10)
+      "Disclose AI assistance with an `Assisted-by` trailer naming your agent and model:"
+  disclosure.where.commit-trailer  (AGENTS.md:10)
+      "Disclose AI assistance with an `Assisted-by` trailer naming your agent and model:"
+  disclosure.required  (registry:fluxcd/.github:CONTRIBUTING.md:42)
+      "You should disclose the use of AI Agents in the description of your PR and in the commit message using
+      the `Assisted-by: AGENT_NAME/LLM_VERSION` tag."
+  disclosure.where.description  (registry:fluxcd/.github:CONTRIBUTING.md:42)
+      "You should disclose the use of AI Agents in the description of your PR and in the commit message using
+      the `Assisted-by: AGENT_NAME/LLM_VERSION` tag."
+  disclosure.where.commit-trailer  (registry:fluxcd/.github:CONTRIBUTING.md:42)
+      "You should disclose the use of AI Agents in the description of your PR and in the commit message using
+      the `Assisted-by: AGENT_NAME/LLM_VERSION` tag."
+  trailers.assisted_by  (CONTRIBUTING.md:42)
+      "You should disclose the use of AI Agents in the description of your PR and in the commit message using
+      the `Assisted-by: AGENT_NAME/LLM_VERSION` tag."
+  trailers.assisted_by  (CONTRIBUTING.md:45)
+      "Adding the `Assisted-by` tag to the commit message can be done with:"
+  trailers.assisted_by  (AGENTS.md:10)
+      "Disclose AI assistance with an `Assisted-by` trailer naming your agent and model:"
+  trailers.assisted_by  (AGENTS.md:12)
+      "git commit -s -m "Add support for X" --trailer "Assisted-by: <agent-name>/<model-id>""
+  trailers.co_authored_by_ai  (CONTRIBUTING.md:39)
+      "AI Agents must not add `Signed-off-by` or `Co-authored-by` tags to the commit message."
+  trailers.co_authored_by_ai  (AGENTS.md:9)
+      "Do not add `Signed-off-by` or `Co-authored-by` trailers with your agent name."
+  trailers.co_authored_by_ai  (registry:fluxcd/.github:CONTRIBUTING.md:39)
+      "AI Agents must not add `Signed-off-by` or `Co-authored-by` tags to the commit message."
+  human_only.review-replies  (CONTRIBUTING.md:36)
+      "When engaging with Flux maintainers please refrain from using AI Agents to generate responses, we want
+      to talk to you, not to your AI Agent."
+  human_only.review-replies  (registry:fluxcd/.github:CONTRIBUTING.md:36)
+      "When engaging with Flux maintainers please refrain from using AI Agents to generate responses, we want
+      to talk to you, not to your AI Agent."
+  issue_first  (CONTRIBUTING.md:86)
+      "Addressing an open issue, if one doesn't exist, please open an issue to discuss the problem and the
+      proposed solution before submitting a PR."
+  issue_first  (registry:fluxcd/.github:CONTRIBUTING.md:73)
+      "Addressing an open issue, if one doesn't exist, please open an issue to discuss the problem and the
+      proposed solution before submitting a PR."
+  dco  (CONTRIBUTING.md:39)
+      "AI Agents must not add `Signed-off-by` or `Co-authored-by` tags to the commit message."
+  dco  (CONTRIBUTING.md:40)
+      "Only humans can legally certify the Developer Certificate of Origin (DCO)."
+  dco  (AGENTS.md:9)
+      "Do not add `Signed-off-by` or `Co-authored-by` trailers with your agent name."
+  dco  (AGENTS.md:9)
+      "Only a human can legally certify the DCO."
+  guidance.run_tests  (AGENTS.md:21)
+      "Run tests locally before pushing."
+
+Heuristic extraction: always read the sources before relying on this. Not legal advice.

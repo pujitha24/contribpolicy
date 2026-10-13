@@ -1,0 +1,112 @@
+{
+  "version": 1,
+  "repo": "thanos-io/thanos",
+  "sources": [
+    {
+      "path": "CONTRIBUTING.md",
+      "url": "https://github.com/thanos-io/thanos/blob/HEAD/CONTRIBUTING.md",
+      "kind": "repo"
+    },
+    {
+      "path": ".github/PULL_REQUEST_TEMPLATE.md",
+      "url": "https://github.com/thanos-io/thanos/blob/HEAD/.github/PULL_REQUEST_TEMPLATE.md",
+      "kind": "repo"
+    },
+    {
+      "path": "docs/contributing/coding-style-guide.md",
+      "url": "https://github.com/thanos-io/thanos/blob/HEAD/docs/contributing/coding-style-guide.md",
+      "kind": "linked"
+    }
+  ],
+  "ai_use": "disclose",
+  "disclosure": {
+    "required": true,
+    "where": [
+      "description"
+    ],
+    "example": "This PR was written in part with the assistance of generative AI"
+  },
+  "trailers": {
+    "assisted_by": "banned",
+    "co_authored_by_ai": "banned"
+  },
+  "human_only": [
+    "review-replies",
+    "commit-messages"
+  ],
+  "assignment_required": false,
+  "issue_first": true,
+  "required_labels": [],
+  "dco": true,
+  "cla": false,
+  "signed_commits": false,
+  "ui_screenshots_required": false,
+  "evidence": [
+    {
+      "rule": "disclosure.required",
+      "quote": "If you used AI tools in preparing your PR, you must disclose this in the description of your PR.",
+      "path": "CONTRIBUTING.md",
+      "line": 69
+    },
+    {
+      "rule": "disclosure.where.description",
+      "quote": "If you used AI tools in preparing your PR, you must disclose this in the description of your PR.",
+      "path": "CONTRIBUTING.md",
+      "line": 69
+    },
+    {
+      "rule": "trailers.assisted_by",
+      "quote": "Listing AI tooling as a co-author, co-signing commits using an AI tool, or using the assisted-by, co-developed or similar commit trailer is not allowed.",
+      "path": "CONTRIBUTING.md",
+      "line": 71
+    },
+    {
+      "rule": "trailers.co_authored_by_ai",
+      "quote": "Listing AI tooling as a co-author, co-signing commits using an AI tool, or using the assisted-by, co-developed or similar commit trailer is not allowed.",
+      "path": "CONTRIBUTING.md",
+      "line": 71
+    },
+    {
+      "rule": "human_only.commit-messages",
+      "quote": "Please do not use AI to generate the commit message, as it can often turn into an unnecessary wall of text, with code-level details about the change, without capturing original motivations for it.",
+      "path": "CONTRIBUTING.md",
+      "line": 75
+    },
+    {
+      "rule": "human_only.review-replies",
+      "quote": "When responding to review comments, you must do so without relying on AI tools.",
+      "path": "CONTRIBUTING.md",
+      "line": 79
+    },
+    {
+      "rule": "issue_first",
+      "quote": "When contributing a complex change to Thanos repository, please discuss the change you wish to make within a Github issue, in Slack, or by another method with the owners of this repository before making the change.",
+      "path": "CONTRIBUTING.md",
+      "line": 30
+    },
+    {
+      "rule": "dco",
+      "quote": "Signing your work: DCO (Developer Certificate of Origin) Process.",
+      "path": "CONTRIBUTING.md",
+      "line": 154
+    },
+    {
+      "rule": "dco",
+      "quote": "By contributing to this project you agree to the Developer Certificate of Origin(DCO).",
+      "path": "CONTRIBUTING.md",
+      "line": 156
+    },
+    {
+      "rule": "guidance.review_ai_output",
+      "quote": "Do not leave the first review of AI generated changes to the reviewers.",
+      "path": "CONTRIBUTING.md",
+      "line": 77
+    },
+    {
+      "rule": "guidance.explain_change",
+      "quote": "Reviewers may ask questions about your AI-assisted code, and if you cannot explain why a change was made, the PR will be closed.",
+      "path": "CONTRIBUTING.md",
+      "line": 77
+    }
+  ]
+}

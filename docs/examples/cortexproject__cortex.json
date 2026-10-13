@@ -1,0 +1,121 @@
+{
+  "version": 1,
+  "repo": "cortexproject/cortex",
+  "sources": [
+    {
+      "path": "CONTRIBUTING.md",
+      "url": "https://github.com/cortexproject/cortex/blob/HEAD/CONTRIBUTING.md",
+      "kind": "repo"
+    },
+    {
+      "path": "GENAI_POLICY.md",
+      "url": "https://github.com/cortexproject/cortex/blob/HEAD/GENAI_POLICY.md",
+      "kind": "repo"
+    },
+    {
+      "path": "AGENTS.md",
+      "url": "https://github.com/cortexproject/cortex/blob/HEAD/AGENTS.md",
+      "kind": "repo"
+    },
+    {
+      "path": "CLAUDE.md",
+      "url": "https://github.com/cortexproject/cortex/blob/HEAD/CLAUDE.md",
+      "kind": "repo"
+    },
+    {
+      "path": ".github/pull_request_template.md",
+      "url": "https://github.com/cortexproject/cortex/blob/HEAD/.github/pull_request_template.md",
+      "kind": "repo"
+    },
+    {
+      "path": "docs/contributing/design-patterns-and-conventions.md",
+      "url": "https://github.com/cortexproject/cortex/blob/HEAD/docs/contributing/design-patterns-and-conventions.md",
+      "kind": "linked"
+    }
+  ],
+  "ai_use": "disclose",
+  "disclosure": {
+    "required": true,
+    "where": [
+      "description"
+    ],
+    "example": ""
+  },
+  "trailers": {
+    "assisted_by": "unspecified",
+    "co_authored_by_ai": "unspecified"
+  },
+  "human_only": [
+    "review-replies",
+    "issues"
+  ],
+  "assignment_required": false,
+  "issue_first": false,
+  "required_labels": [],
+  "dco": true,
+  "cla": false,
+  "signed_commits": false,
+  "ui_screenshots_required": false,
+  "evidence": [
+    {
+      "rule": "disclosure.required",
+      "quote": "Disclose significant AI usage.",
+      "path": "GENAI_POLICY.md",
+      "line": 27
+    },
+    {
+      "rule": "disclosure.required",
+      "quote": "If AI generated the bulk of a contribution (e.g., an entire new feature, large refactors, or substantial documentation), note this in the PR description.",
+      "path": "GENAI_POLICY.md",
+      "line": 27
+    },
+    {
+      "rule": "disclosure.where.description",
+      "quote": "If AI generated the bulk of a contribution (e.g., an entire new feature, large refactors, or substantial documentation), note this in the PR description.",
+      "path": "GENAI_POLICY.md",
+      "line": 27
+    },
+    {
+      "rule": "human_only.review-replies",
+      "quote": "Issues, pull request reviews, and discussions must be substantively human-authored.",
+      "path": "GENAI_POLICY.md",
+      "line": 35
+    },
+    {
+      "rule": "human_only.issues",
+      "quote": "Issues, pull request reviews, and discussions must be substantively human-authored.",
+      "path": "GENAI_POLICY.md",
+      "line": 35
+    },
+    {
+      "rule": "dco",
+      "quote": "Honour the DCO.",
+      "path": "GENAI_POLICY.md",
+      "line": 29
+    },
+    {
+      "rule": "dco",
+      "quote": "Your `Signed-off-by` line on each commit certifies the Developer Certificate of Origin for all content in that commit, including any AI-generated portions.",
+      "path": "GENAI_POLICY.md",
+      "line": 29
+    },
+    {
+      "rule": "dco",
+      "quote": "Sign commits with DCO: `git commit -s -m \"message\"`",
+      "path": "AGENTS.md",
+      "line": 114
+    },
+    {
+      "rule": "guidance.explain_change",
+      "quote": "Understand every line you submit.",
+      "path": "GENAI_POLICY.md",
+      "line": 23
+    },
+    {
+      "rule": "guidance.review_ai_output",
+      "quote": "Review and validate AI output.",
+      "path": "GENAI_POLICY.md",
+      "line": 25
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+contribpolicy · jaegertracing/jaeger
+
+AI use               DISCLOSE  (AI assistance is allowed if you disclose it)
+Disclosure           required in: checkbox
+  example            "[x] Light: AI provided minor assistance (formatting, simple suggestions)"
+Assisted-by trailer  unspecified
+AI Co-authored-by    allowed
+Human-only           review-replies
+Issue first          yes
+Assignment required  no
+Required labels      -
+DCO / CLA / signed   DCO yes  ·  CLA no  ·  signed+verified commits no
+UI screenshots       -
+
+Sources
+  [repo]         CONTRIBUTING.md
+                 https://github.com/jaegertracing/jaeger/blob/HEAD/CONTRIBUTING.md
+  [repo]         CONTRIBUTING_GUIDELINES.md
+                 https://github.com/jaegertracing/jaeger/blob/HEAD/CONTRIBUTING_GUIDELINES.md
+  [repo]         AI_POLICY.md
+                 https://github.com/jaegertracing/jaeger/blob/HEAD/AI_POLICY.md
+  [repo]         AGENTS.md
+                 https://github.com/jaegertracing/jaeger/blob/HEAD/AGENTS.md
+  [repo]         CLAUDE.md
+                 https://github.com/jaegertracing/jaeger/blob/HEAD/CLAUDE.md
+  [repo]         .github/copilot-instructions.md
+                 https://github.com/jaegertracing/jaeger/blob/HEAD/.github/copilot-instructions.md
+  [org]          jaegertracing/.github:.github/PULL_REQUEST_TEMPLATE.md
+                 https://github.com/jaegertracing/.github/blob/HEAD/.github/PULL_REQUEST_TEMPLATE.md
+
+Evidence
+  disclosure.required  (AI_POLICY.md:39)
+      "Declare AI usage with the checkbox in the pull request template."
+  disclosure.where.checkbox  (AI_POLICY.md:39)
+      "Declare AI usage with the checkbox in the pull request template."
+  disclosure.where.checkbox  (jaegertracing/.github:.github/PULL_REQUEST_TEMPLATE.md:23)
+      "[ ] None: No AI tools were used in creating this PR"
+  disclosure.where.checkbox  (jaegertracing/.github:.github/PULL_REQUEST_TEMPLATE.md:24)
+      "[ ] Light: AI provided minor assistance (formatting, simple suggestions)"
+  trailers.co_authored_by_ai  (AI_POLICY.md:39)
+      "Whether you also credit your tool with a `Co-authored-by` trailer is up to you; what the project
+      requires is your own sign-off, which is the line that carries the certification."
+  human_only.review-replies  (AI_POLICY.md:29)
+      "Letting an agent answer review feedback autonomously, so that its replies go out without you reading
+      and approving each one."
+  issue_first  (CONTRIBUTING_GUIDELINES.md:23)
+      "Open an issue first"
+  issue_first  (CONTRIBUTING_GUIDELINES.md:25)
+      "Before making any significant changes, please open an issue."
+  issue_first  (AI_POLICY.md:53)
+      "So bias towards discussion first — for anything beyond a clearly scoped fix, open an issue and agree on
+      the direction before you implement it — and keep each change small and focused."
+  dco  (CONTRIBUTING.md:63)
+      "All commits in the PR must be signed (verified by the DCO check on GitHub)."
+  dco  (CONTRIBUTING_GUIDELINES.md:162)
+      "By contributing to this project you agree to the Developer Certificate of Origin (or simply DCO)."
+  dco  (CONTRIBUTING_GUIDELINES.md:168)
+      "The sign-off is a simple line at the end of the explanation for the patch, which certifies that you
+      wrote it or otherwise have the right to pass it on as an open-source patch."
+  dco  (AI_POLICY.md:38)
+      "Your DCO sign-off covers AI output the same as code you typed."
+  guidance.review_ai_output  (CONTRIBUTING_GUIDELINES.md:127)
+      "Verify AI Output: If you use AI tools to assist in refactoring, you are responsible for manually
+      verifying every line."
+  guidance.explain_change  (AI_POLICY.md:13)
+      "Ensure understanding – Contributors should understand and be able to explain every change they submit."
+  guidance.run_tests  (AI_POLICY.md:28)
+      "Submitting AI-generated code without testing."
+
+Heuristic extraction: always read the sources before relying on this. Not legal advice.

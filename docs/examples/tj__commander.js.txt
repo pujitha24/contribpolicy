@@ -1,0 +1,20 @@
+contribpolicy · tj/commander.js
+
+AI use               UNSPECIFIED  (no AI policy found)
+Disclosure           not required (none found)
+Assisted-by trailer  unspecified
+AI Co-authored-by    unspecified
+Human-only           -
+Issue first          no
+Assignment required  no
+Required labels      -
+DCO / CLA / signed   DCO no  ·  CLA no  ·  signed+verified commits no
+UI screenshots       -
+
+Sources
+  [repo]         CONTRIBUTING.md
+                 https://github.com/tj/commander.js/blob/HEAD/CONTRIBUTING.md
+  [repo]         .github/PULL_REQUEST_TEMPLATE.md
+                 https://github.com/tj/commander.js/blob/HEAD/.github/PULL_REQUEST_TEMPLATE.md
+
+Heuristic extraction: always read the sources before relying on this. Not legal advice.

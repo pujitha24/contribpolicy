@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "about": "Organisation-level contribution policies that apply to repositories that do not carry the text themselves. Each entry names the document (repo + path, optionally one section) that contribpolicy fetches and runs through the same extractor as repository files. Add an entry only when the organisation itself states that the policy applies across its repositories, and cite that statement in 'scope'.",
+  "entries": [
+    {
+      "id": "kubernetes-ai-guidance",
+      "title": "Kubernetes contributor guide: AI Guidance",
+      "orgs": ["kubernetes", "kubernetes-sigs", "kubernetes-csi", "kubernetes-client"],
+      "url": "https://www.kubernetes.dev/docs/guide/pull-requests/#ai-guidance",
+      "repo": "kubernetes/community",
+      "path": "contributors/guide/pull-requests.md",
+      "section": "AI Guidance",
+      "ai_policy": true,
+      "scope": "The Kubernetes contributor guide (kubernetes.dev) governs pull requests to every repository of the Kubernetes project's GitHub organisations; repositories link to it as the 'AI Tool Usage Policy'.",
+      "verified": "2026-10-12"
+    },
+    {
+      "id": "tekton-ai-contribution-policy",
+      "title": "Tekton AI Contribution Policy",
+      "orgs": ["tektoncd"],
+      "url": "https://github.com/tektoncd/community/blob/main/ai-contribution-policy.md",
+      "repo": "tektoncd/community",
+      "path": "ai-contribution-policy.md",
+      "section": "",
+      "ai_policy": true,
+      "scope": "Published in tektoncd/community, the repository that holds the project-wide contribution standards for all tektoncd repositories.",
+      "verified": "2026-10-12"
+    },
+    {
+      "id": "flux-contributing",
+      "title": "Flux organisation CONTRIBUTING (AI Coding Assistants Guidance)",
+      "orgs": ["fluxcd"],
+      "url": "https://github.com/fluxcd/.github/blob/main/CONTRIBUTING.md",
+      "repo": "fluxcd/.github",
+      "path": "CONTRIBUTING.md",
+      "section": "",
+      "ai_policy": false,
+      "scope": "The fluxcd/.github CONTRIBUTING.md is the organisation default and states that all Flux repositories contain an AGENTS.md that agents must follow.",
+      "verified": "2026-10-12"
+    },
+    {
+      "id": "jaeger-ai-policy",
+      "title": "Jaeger AI Usage Policy",
+      "orgs": ["jaegertracing"],
+      "url": "https://github.com/jaegertracing/jaeger/blob/main/AI_POLICY.md",
+      "repo": "jaegertracing/jaeger",
+      "path": "AI_POLICY.md",
+      "section": "",
+      "ai_policy": true,
+      "scope": "The policy states that it applies to every repository in the jaegertracing GitHub organization.",
+      "verified": "2026-10-12"
+    },
+    {
+      "id": "cortex-genai-policy",
+      "title": "Cortex Generative AI Contribution Policy",
+      "orgs": ["cortexproject"],
+      "url": "https://github.com/cortexproject/cortex/blob/master/GENAI_POLICY.md",
+      "repo": "cortexproject/cortex",
+      "path": "GENAI_POLICY.md",
+      "section": "",
+      "ai_policy": true,
+      "scope": "The policy states that it applies to all repositories under the cortexproject GitHub organisation.",
+      "verified": "2026-10-12"
+    }
+  ]
+}

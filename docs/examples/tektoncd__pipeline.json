@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "repo": "tektoncd/pipeline",
+  "sources": [
+    {
+      "path": "CONTRIBUTING.md",
+      "url": "https://github.com/tektoncd/pipeline/blob/HEAD/CONTRIBUTING.md",
+      "kind": "repo"
+    },
+    {
+      "path": "AGENTS.md",
+      "url": "https://github.com/tektoncd/pipeline/blob/HEAD/AGENTS.md",
+      "kind": "repo"
+    },
+    {
+      "path": ".github/pull_request_template.md",
+      "url": "https://github.com/tektoncd/pipeline/blob/HEAD/.github/pull_request_template.md",
+      "kind": "repo"
+    },
+    {
+      "path": "api_compatibility_policy.md",
+      "url": "https://github.com/tektoncd/pipeline/blob/HEAD/api_compatibility_policy.md",
+      "kind": "linked"
+    },
+    {
+      "path": "DEVELOPMENT.md",
+      "url": "https://github.com/tektoncd/pipeline/blob/HEAD/DEVELOPMENT.md",
+      "kind": "linked"
+    },
+    {
+      "path": "registry:tektoncd/community:ai-contribution-policy.md",
+      "url": "https://github.com/tektoncd/community/blob/main/ai-contribution-policy.md",
+      "kind": "org"
+    }
+  ],
+  "ai_use": "disclose",
+  "disclosure": {
+    "required": true,
+    "where": [
+      "description",
+      "commit-trailer"
+    ],
+    "example": "Assisted-by: Claude 3.5 Sonnet"
+  },
+  "trailers": {
+    "assisted_by": "allowed",
+    "co_authored_by_ai": "allowed"
+  },
+  "human_only": [],
+  "assignment_required": false,
+  "issue_first": false,
+  "required_labels": [],
+  "dco": false,
+  "cla": false,
+  "signed_commits": false,
+  "ui_screenshots_required": false,
+  "evidence": [
+    {
+      "rule": "disclosure.required",
+      "quote": "All AI usage must be disclosed.",
+      "path": "registry:tektoncd/community:ai-contribution-policy.md",
+      "line": 7
+    },
+    {
+      "rule": "disclosure.required",
+      "quote": "You should state the extent that the work was AI-assisted.",
+      "path": "registry:tektoncd/community:ai-contribution-policy.md",
+      "line": 7
+    },
+    {
+      "rule": "disclosure.where.commit-trailer",
+      "quote": "Preferred: Git commit message trailer",
+      "path": "registry:tektoncd/community:ai-contribution-policy.md",
+      "line": 27
+    },
+    {
+      "rule": "disclosure.where.description",
+      "quote": "Alternative: Pull request description",
+      "path": "registry:tektoncd/community:ai-contribution-policy.md",
+      "line": 34
+    },
+    {
+      "rule": "trailers.assisted_by",
+      "quote": "Assisted-by: Claude 3.5 Sonnet",
+      "path": "registry:tektoncd/community:ai-contribution-policy.md",
+      "line": 31
+    },
+    {
+      "rule": "trailers.co_authored_by_ai",
+      "quote": "Mentioning the specific tool (e.g., Claude, Copilot, ChatGPT) is encouraged, as it can help reviewers understand the generated code and some tools support `Co-authored-by` trailers natively.",
+      "path": "registry:tektoncd/community:ai-contribution-policy.md",
+      "line": 7
+    },
+    {
+      "rule": "guidance.run_tests",
+      "quote": "Please review, understand, and test all AI-generated content before submitting.",
+      "path": "registry:tektoncd/community:ai-contribution-policy.md",
+      "line": 11
+    },
+    {
+      "rule": "guidance.size_limit",
+      "quote": "Keep pull requests small and focused — AI tools make it easy to generate large changes, but the review burden remains on maintainers",
+      "path": "registry:tektoncd/community:ai-contribution-policy.md",
+      "line": 47
+    },
+    {
+      "rule": "guidance.explain_change",
+      "quote": "You must not submit code that you do not understand.",
+      "path": "registry:tektoncd/community:ai-contribution-policy.md",
+      "line": 49
+    }
+  ]
+}

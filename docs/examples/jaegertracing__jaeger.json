@@ -1,0 +1,161 @@
+{
+  "version": 1,
+  "repo": "jaegertracing/jaeger",
+  "sources": [
+    {
+      "path": "CONTRIBUTING.md",
+      "url": "https://github.com/jaegertracing/jaeger/blob/HEAD/CONTRIBUTING.md",
+      "kind": "repo"
+    },
+    {
+      "path": "CONTRIBUTING_GUIDELINES.md",
+      "url": "https://github.com/jaegertracing/jaeger/blob/HEAD/CONTRIBUTING_GUIDELINES.md",
+      "kind": "repo"
+    },
+    {
+      "path": "AI_POLICY.md",
+      "url": "https://github.com/jaegertracing/jaeger/blob/HEAD/AI_POLICY.md",
+      "kind": "repo"
+    },
+    {
+      "path": "AGENTS.md",
+      "url": "https://github.com/jaegertracing/jaeger/blob/HEAD/AGENTS.md",
+      "kind": "repo"
+    },
+    {
+      "path": "CLAUDE.md",
+      "url": "https://github.com/jaegertracing/jaeger/blob/HEAD/CLAUDE.md",
+      "kind": "repo"
+    },
+    {
+      "path": ".github/copilot-instructions.md",
+      "url": "https://github.com/jaegertracing/jaeger/blob/HEAD/.github/copilot-instructions.md",
+      "kind": "repo"
+    },
+    {
+      "path": "jaegertracing/.github:.github/PULL_REQUEST_TEMPLATE.md",
+      "url": "https://github.com/jaegertracing/.github/blob/HEAD/.github/PULL_REQUEST_TEMPLATE.md",
+      "kind": "org"
+    }
+  ],
+  "ai_use": "disclose",
+  "disclosure": {
+    "required": true,
+    "where": [
+      "checkbox"
+    ],
+    "example": "[x] Light: AI provided minor assistance (formatting, simple suggestions)"
+  },
+  "trailers": {
+    "assisted_by": "unspecified",
+    "co_authored_by_ai": "allowed"
+  },
+  "human_only": [
+    "review-replies"
+  ],
+  "assignment_required": false,
+  "issue_first": true,
+  "required_labels": [],
+  "dco": true,
+  "cla": false,
+  "signed_commits": false,
+  "ui_screenshots_required": false,
+  "evidence": [
+    {
+      "rule": "disclosure.required",
+      "quote": "Declare AI usage with the checkbox in the pull request template.",
+      "path": "AI_POLICY.md",
+      "line": 39
+    },
+    {
+      "rule": "disclosure.where.checkbox",
+      "quote": "Declare AI usage with the checkbox in the pull request template.",
+      "path": "AI_POLICY.md",
+      "line": 39
+    },
+    {
+      "rule": "disclosure.where.checkbox",
+      "quote": "[ ] None: No AI tools were used in creating this PR",
+      "path": "jaegertracing/.github:.github/PULL_REQUEST_TEMPLATE.md",
+      "line": 23
+    },
+    {
+      "rule": "disclosure.where.checkbox",
+      "quote": "[ ] Light: AI provided minor assistance (formatting, simple suggestions)",
+      "path": "jaegertracing/.github:.github/PULL_REQUEST_TEMPLATE.md",
+      "line": 24
+    },
+    {
+      "rule": "trailers.co_authored_by_ai",
+      "quote": "Whether you also credit your tool with a `Co-authored-by` trailer is up to you; what the project requires is your own sign-off, which is the line that carries the certification.",
+      "path": "AI_POLICY.md",
+      "line": 39
+    },
+    {
+      "rule": "human_only.review-replies",
+      "quote": "Letting an agent answer review feedback autonomously, so that its replies go out without you reading and approving each one.",
+      "path": "AI_POLICY.md",
+      "line": 29
+    },
+    {
+      "rule": "issue_first",
+      "quote": "Open an issue first",
+      "path": "CONTRIBUTING_GUIDELINES.md",
+      "line": 23
+    },
+    {
+      "rule": "issue_first",
+      "quote": "Before making any significant changes, please open an issue.",
+      "path": "CONTRIBUTING_GUIDELINES.md",
+      "line": 25
+    },
+    {
+      "rule": "issue_first",
+      "quote": "So bias towards discussion first — for anything beyond a clearly scoped fix, open an issue and agree on the direction before you implement it — and keep each change small and focused.",
+      "path": "AI_POLICY.md",
+      "line": 53
+    },
+    {
+      "rule": "dco",
+      "quote": "All commits in the PR must be signed (verified by the DCO check on GitHub).",
+      "path": "CONTRIBUTING.md",
+      "line": 63
+    },
+    {
+      "rule": "dco",
+      "quote": "By contributing to this project you agree to the Developer Certificate of Origin (or simply DCO).",
+      "path": "CONTRIBUTING_GUIDELINES.md",
+      "line": 162
+    },
+    {
+      "rule": "dco",
+      "quote": "The sign-off is a simple line at the end of the explanation for the patch, which certifies that you wrote it or otherwise have the right to pass it on as an open-source patch.",
+      "path": "CONTRIBUTING_GUIDELINES.md",
+      "line": 168
+    },
+    {
+      "rule": "dco",
+      "quote": "Your DCO sign-off covers AI output the same as code you typed.",
+      "path": "AI_POLICY.md",
+      "line": 38
+    },
+    {
+      "rule": "guidance.review_ai_output",
+      "quote": "Verify AI Output: If you use AI tools to assist in refactoring, you are responsible for manually verifying every line.",
+      "path": "CONTRIBUTING_GUIDELINES.md",
+      "line": 127
+    },
+    {
+      "rule": "guidance.explain_change",
+      "quote": "Ensure understanding – Contributors should understand and be able to explain every change they submit.",
+      "path": "AI_POLICY.md",
+      "line": 13
+    },
+    {
+      "rule": "guidance.run_tests",
+      "quote": "Submitting AI-generated code without testing.",
+      "path": "AI_POLICY.md",
+      "line": 28
+    }
+  ]
+}

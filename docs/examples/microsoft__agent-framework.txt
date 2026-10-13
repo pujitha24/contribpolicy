@@ -1,0 +1,69 @@
+contribpolicy · microsoft/agent-framework
+
+AI use               DISCLOSE  (AI assistance is allowed if you disclose it)
+Disclosure           required in: description, checkbox
+  example            "[x] This is an AI-assisted contribution."
+Assisted-by trailer  unspecified
+AI Co-authored-by    unspecified
+Human-only           review-replies
+Issue first          yes
+Assignment required  no
+Required labels      -
+DCO / CLA / signed   DCO no  ·  CLA no  ·  signed+verified commits no
+UI screenshots       -
+
+Sources
+  [repo]         CONTRIBUTING.md
+                 https://github.com/microsoft/agent-framework/blob/HEAD/CONTRIBUTING.md
+  [repo]         AI_CONTRIBUTIONS.md
+                 https://github.com/microsoft/agent-framework/blob/HEAD/AI_CONTRIBUTIONS.md
+  [repo]         .github/copilot-instructions.md
+                 https://github.com/microsoft/agent-framework/blob/HEAD/.github/copilot-instructions.md
+  [repo]         .github/pull_request_template.md
+                 https://github.com/microsoft/agent-framework/blob/HEAD/.github/pull_request_template.md
+  [linked]       dotnet/AGENTS.md
+                 https://github.com/microsoft/agent-framework/blob/HEAD/dotnet/AGENTS.md
+  [linked]       python/AGENTS.md
+                 https://github.com/microsoft/agent-framework/blob/HEAD/python/AGENTS.md
+
+Evidence
+  disclosure.required  (CONTRIBUTING.md:236)
+      "Complete the AI assistance disclosure in the pull request template."
+  disclosure.where.checkbox  (CONTRIBUTING.md:236)
+      "Complete the AI assistance disclosure in the pull request template."
+  disclosure.required  (AI_CONTRIBUTIONS.md:25)
+      "Disclose Material AI Assistance"
+  disclosure.required  (AI_CONTRIBUTIONS.md:27)
+      "Disclose material AI assistance in the issue or pull request description."
+  disclosure.where.description  (AI_CONTRIBUTIONS.md:27)
+      "Disclose material AI assistance in the issue or pull request description."
+  disclosure.where.checkbox  (AI_CONTRIBUTIONS.md:27)
+      "For a pull request, complete the AI Assistance section of the pull request template and check exactly
+      one option."
+  disclosure.where.checkbox  (.github/pull_request_template.md:46)
+      "[ ] No material AI assistance was used."
+  disclosure.where.checkbox  (.github/pull_request_template.md:47)
+      "[ ] This is an AI-assisted contribution."
+  disclosure.where.description  (.github/pull_request_template.md:49)
+      "If this is an AI-assisted contribution, briefly identify the assisted areas, such as implementation,
+      tests, documentation, design, or this PR description."
+  human_only.review-replies  (AI_CONTRIBUTIONS.md:44)
+      "Be able to explain the change and respond to review feedback themselves."
+  issue_first  (CONTRIBUTING.md:119)
+      "File an issue and agree on the problem and direction before investing in implementation."
+  issue_first  (CONTRIBUTING.md:220)
+      "Complete the issue-first process."
+  issue_first  (AI_CONTRIBUTIONS.md:94)
+      "For non-trivial changes, start with an issue and wait for a maintainer to add the `ready-for-
+      implementation` label or explicitly agree with the direction before starting implementation, as
+      described in the Contribution Guidelines."
+  guidance.review_ai_output  (AI_CONTRIBUTIONS.md:42)
+      "Review all submitted content rather than forwarding generated output."
+  guidance.explain_change  (AI_CONTRIBUTIONS.md:44)
+      "Be able to explain the change and respond to review feedback themselves."
+  guidance.run_tests  (AI_CONTRIBUTIONS.md:58)
+      "Run the relevant builds, tests, formatting, and static analysis."
+  guidance.size_limit  (AI_CONTRIBUTIONS.md:97)
+      "Keep each contribution focused on one agreed problem."
+
+Heuristic extraction: always read the sources before relying on this. Not legal advice.

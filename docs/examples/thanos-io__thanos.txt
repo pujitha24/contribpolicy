@@ -1,0 +1,53 @@
+contribpolicy · thanos-io/thanos
+
+AI use               DISCLOSE  (AI assistance is allowed if you disclose it)
+Disclosure           required in: description
+  example            "This PR was written in part with the assistance of generative AI"
+Assisted-by trailer  banned
+AI Co-authored-by    banned
+Human-only           review-replies, commit-messages
+Issue first          yes
+Assignment required  no
+Required labels      -
+DCO / CLA / signed   DCO yes  ·  CLA no  ·  signed+verified commits no
+UI screenshots       -
+
+Sources
+  [repo]         CONTRIBUTING.md
+                 https://github.com/thanos-io/thanos/blob/HEAD/CONTRIBUTING.md
+  [repo]         .github/PULL_REQUEST_TEMPLATE.md
+                 https://github.com/thanos-io/thanos/blob/HEAD/.github/PULL_REQUEST_TEMPLATE.md
+  [linked]       docs/contributing/coding-style-guide.md
+                 https://github.com/thanos-io/thanos/blob/HEAD/docs/contributing/coding-style-guide.md
+
+Evidence
+  disclosure.required  (CONTRIBUTING.md:69)
+      "If you used AI tools in preparing your PR, you must disclose this in the description of your PR."
+  disclosure.where.description  (CONTRIBUTING.md:69)
+      "If you used AI tools in preparing your PR, you must disclose this in the description of your PR."
+  trailers.assisted_by  (CONTRIBUTING.md:71)
+      "Listing AI tooling as a co-author, co-signing commits using an AI tool, or using the assisted-by, co-
+      developed or similar commit trailer is not allowed."
+  trailers.co_authored_by_ai  (CONTRIBUTING.md:71)
+      "Listing AI tooling as a co-author, co-signing commits using an AI tool, or using the assisted-by, co-
+      developed or similar commit trailer is not allowed."
+  human_only.commit-messages  (CONTRIBUTING.md:75)
+      "Please do not use AI to generate the commit message, as it can often turn into an unnecessary wall of
+      text, with code-level details about the change, without capturing original motivations for it."
+  human_only.review-replies  (CONTRIBUTING.md:79)
+      "When responding to review comments, you must do so without relying on AI tools."
+  issue_first  (CONTRIBUTING.md:30)
+      "When contributing a complex change to Thanos repository, please discuss the change you wish to make
+      within a Github issue, in Slack, or by another method with the owners of this repository before making
+      the change."
+  dco  (CONTRIBUTING.md:154)
+      "Signing your work: DCO (Developer Certificate of Origin) Process."
+  dco  (CONTRIBUTING.md:156)
+      "By contributing to this project you agree to the Developer Certificate of Origin(DCO)."
+  guidance.review_ai_output  (CONTRIBUTING.md:77)
+      "Do not leave the first review of AI generated changes to the reviewers."
+  guidance.explain_change  (CONTRIBUTING.md:77)
+      "Reviewers may ask questions about your AI-assisted code, and if you cannot explain why a change was
+      made, the PR will be closed."
+
+Heuristic extraction: always read the sources before relying on this. Not legal advice.

@@ -1,0 +1,89 @@
+contribpolicy · radius-project/radius
+
+AI use               RESTRICTED  (AI/automated contributions only under stated conditions)
+Disclosure           not required (none found)
+Assisted-by trailer  unspecified
+AI Co-authored-by    unspecified
+Human-only           -
+Issue first          yes
+Assignment required  no
+Required labels      `triaged` AND (`help wanted` OR `good first issue`)
+DCO / CLA / signed   DCO yes  ·  CLA no  ·  signed+verified commits yes
+UI screenshots       -
+
+Sources
+  [repo]         CONTRIBUTING.md
+                 https://github.com/radius-project/radius/blob/HEAD/CONTRIBUTING.md
+  [repo]         AGENTS.md
+                 https://github.com/radius-project/radius/blob/HEAD/AGENTS.md
+  [repo]         .github/copilot-instructions.md
+                 https://github.com/radius-project/radius/blob/HEAD/.github/copilot-instructions.md
+  [repo]         .github/pull_request_template.md
+                 https://github.com/radius-project/radius/blob/HEAD/.github/pull_request_template.md
+  [linked]       docs/contributing/README.md
+                 https://github.com/radius-project/radius/blob/HEAD/docs/contributing/README.md
+  [linked]       docs/contributing/contributing-code/contributing-code-first-commit/first-commit-06-creating-a-pr/index.md
+                 https://github.com/radius-project/radius/blob/HEAD/docs/contributing/contributing-code/contributing-code-first-commit/first-commit-06-creating-a-pr/index.md
+  [linked]       docs/contributing/contributing-pull-requests/README.md
+                 https://github.com/radius-project/radius/blob/HEAD/docs/contributing/contributing-pull-requests/README.md
+  [linked]       .github/instructions/code-review.instructions.md
+                 https://github.com/radius-project/radius/blob/HEAD/.github/instructions/code-review.instructions.md
+  [linked]       docs/contributing/contributing-code/contributing-code-first-commit/README.md
+                 https://github.com/radius-project/radius/blob/HEAD/docs/contributing/contributing-code/contributing-code-first-commit/README.md
+  [linked]       docs/contributing/triage/triage-process.md
+                 https://github.com/radius-project/radius/blob/HEAD/docs/contributing/triage/triage-process.md
+  [linked]       docs/contributing/contributing-code/contributing-code-prerequisites/README.md
+                 https://github.com/radius-project/radius/blob/HEAD/docs/contributing/contributing-code/contributing-code-prerequisites/README.md
+  [linked]       docs/contributing/contributing-code/contributing-code-building/README.md
+                 https://github.com/radius-project/radius/blob/HEAD/docs/contributing/contributing-code/contributing-code-building/README.md
+  [linked]       docs/contributing/contributing-code/contributing-code-tests/README.md
+                 https://github.com/radius-project/radius/blob/HEAD/docs/contributing/contributing-code/contributing-code-tests/README.md
+
+Evidence
+  ai_use  (CONTRIBUTING.md:30)
+      "External contributors using an AI agent, coding bot, or other automation must restrict their
+      contributions to open issues labeled `triaged` and either `help wanted` or `good first issue`."
+  ai_use  (AGENTS.md:7)
+      "External contributors using an AI agent, coding bot, or other automation may implement an issue and
+      open a pull request only when the issue is open, has the `triaged` label, and has either the `help
+      wanted` or `good first issue` label."
+  ai_use  (docs/contributing/contributing-pull-requests/README.md:12)
+      "External contributors using an AI agent, coding bot, or other automation may only implement an open
+      issue that has the `triaged` label and either the `help wanted` or `good first issue` label."
+  required_labels  (CONTRIBUTING.md:30)
+      "External contributors using an AI agent, coding bot, or other automation must restrict their
+      contributions to open issues labeled `triaged` and either `help wanted` or `good first issue`."
+  required_labels  (AGENTS.md:7)
+      "External contributors using an AI agent, coding bot, or other automation may implement an issue and
+      open a pull request only when the issue is open, has the `triaged` label, and has either the `help
+      wanted` or `good first issue` label."
+  required_labels  (docs/contributing/contributing-code/contributing-code-first-commit/first-commit-06-creating-a-pr/index.md:7)
+      "External contributors using an AI agent, coding bot, or other automation must choose an open issue that
+      is labeled `triaged` and either `help wanted` or `good first issue`."
+  required_labels  (docs/contributing/contributing-pull-requests/README.md:12)
+      "External contributors using an AI agent, coding bot, or other automation may only implement an open
+      issue that has the `triaged` label and either the `help wanted` or `good first issue` label."
+  issue_first  (CONTRIBUTING.md:29)
+      "For other changes, start by choosing an existing issue or opening an issue."
+  dco  (CONTRIBUTING.md:36)
+      "The Radius project follows the Developer Certificate of Origin."
+  dco  (CONTRIBUTING.md:38)
+      "Contributors sign-off that they adhere to these requirements by adding a Signed-off-by line to commit
+      messages."
+  dco  (AGENTS.md:48)
+      "Read CONTRIBUTING.md for the contribution process, the Developer Certificate of Origin sign-off
+      requirement, and links to the issue and pull-request guides."
+  dco  (docs/contributing/contributing-code/contributing-code-first-commit/first-commit-06-creating-a-pr/index.md:47)
+      "Radius leverages the Developer Certificate of Origin to certify that you have the right to submit the
+      code you are contributing to the project."
+  signed_commits  (CONTRIBUTING.md:54)
+      "Every commit must also be cryptographically signed so that GitHub displays a Verified badge."
+  signed_commits  (CONTRIBUTING.md:54)
+      "Cryptographic signing is separate from the DCO `Signed-off-by` line; both are required."
+  signed_commits  (docs/contributing/contributing-code/contributing-code-first-commit/first-commit-06-creating-a-pr/index.md:55)
+      "We require all contributors to cryptographically sign their commits so that they show as Verified on
+      GitHub."
+  signed_commits  (docs/contributing/contributing-pull-requests/README.md:83)
+      "Every commit must also be cryptographically signed so that GitHub displays a Verified badge."
+
+Heuristic extraction: always read the sources before relying on this. Not legal advice.

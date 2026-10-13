@@ -1,0 +1,69 @@
+contribpolicy · kubernetes-sigs/kueue
+
+AI use               DISCLOSE  (AI assistance is allowed if you disclose it)
+Disclosure           required in: description
+  example            "This PR was written in part with the assistance of generative AI"
+Assisted-by trailer  banned
+AI Co-authored-by    banned
+Human-only           review-replies, commit-messages
+Issue first          no
+Assignment required  no
+Required labels      -
+DCO / CLA / signed   DCO no  ·  CLA yes  ·  signed+verified commits no
+UI screenshots       -
+
+Sources
+  [repo]         CONTRIBUTING.md
+                 https://github.com/kubernetes-sigs/kueue/blob/HEAD/CONTRIBUTING.md
+  [repo]         AGENTS.md
+                 https://github.com/kubernetes-sigs/kueue/blob/HEAD/AGENTS.md
+  [repo]         CLAUDE.md
+                 https://github.com/kubernetes-sigs/kueue/blob/HEAD/CLAUDE.md
+  [repo]         .github/PULL_REQUEST_TEMPLATE.md
+                 https://github.com/kubernetes-sigs/kueue/blob/HEAD/.github/PULL_REQUEST_TEMPLATE.md
+  [linked]       site/content/en/community/contribution_guidelines/coding_guidelines.md
+                 https://github.com/kubernetes-sigs/kueue/blob/HEAD/site/content/en/community/contribution_guidelines/coding_guidelines.md
+  [linked]       site/content/en/community/contribution_guidelines/writing_tests.md
+                 https://github.com/kubernetes-sigs/kueue/blob/HEAD/site/content/en/community/contribution_guidelines/writing_tests.md
+  [org registry] registry:kubernetes/community:contributors/guide/pull-requests.md  Kubernetes contributor guide: AI Guidance
+                 https://www.kubernetes.dev/docs/guide/pull-requests/#ai-guidance
+
+Evidence
+  disclosure.required  (AGENTS.md:40)
+      "Disclose AI usage in the PR description."
+  disclosure.where.description  (AGENTS.md:40)
+      "Disclose AI usage in the PR description."
+  disclosure.required  (AGENTS.md:41)
+      "Disclose AI usage when commenting or filing issues."
+  disclosure.required  (registry:kubernetes/community:contributors/guide/pull-requests.md:629)
+      "If you used AI tools in preparing your PR, you must disclose this in the description of your PR."
+  disclosure.where.description  (registry:kubernetes/community:contributors/guide/pull-requests.md:629)
+      "If you used AI tools in preparing your PR, you must disclose this in the description of your PR."
+  trailers.assisted_by  (AGENTS.md:42)
+      "Do not add AI co-author lines, `assisted-by`, `co-developed`, or similar commit trailers."
+  trailers.assisted_by  (registry:kubernetes/community:contributors/guide/pull-requests.md:632)
+      "Listing AI tooling as a co-author, co-signing commits using an AI tool, or using the `assisted-by`,
+      `co-developed` or similar commit trailer is not allowed."
+  trailers.co_authored_by_ai  (AGENTS.md:42)
+      "No AI authorship markers."
+  trailers.co_authored_by_ai  (AGENTS.md:42)
+      "Do not add AI co-author lines, `assisted-by`, `co-developed`, or similar commit trailers."
+  trailers.co_authored_by_ai  (registry:kubernetes/community:contributors/guide/pull-requests.md:632)
+      "Listing AI tooling as a co-author, co-signing commits using an AI tool, or using the `assisted-by`,
+      `co-developed` or similar commit trailer is not allowed."
+  human_only.commit-messages  (registry:kubernetes/community:contributors/guide/pull-requests.md:638)
+      "Large AI generated PRs and AI generated commit messages are not allowed."
+  human_only.review-replies  (registry:kubernetes/community:contributors/guide/pull-requests.md:644)
+      "When responding to review comments, you must do so without relying on AI tools."
+  cla  (CONTRIBUTING.md:15)
+      "Contributor License Agreement - Kubernetes projects require that you sign a Contributor License
+      Agreement (CLA) before we can accept your pull requests"
+  guidance.size_limit  (registry:kubernetes/community:contributors/guide/pull-requests.md:638)
+      "Large AI generated PRs and AI generated commit messages are not allowed."
+  guidance.review_ai_output  (registry:kubernetes/community:contributors/guide/pull-requests.md:640)
+      "Do not leave the first review of AI generated changes to the reviewers."
+  guidance.explain_change  (registry:kubernetes/community:contributors/guide/pull-requests.md:641)
+      "Reviewers may ask questions about your AI-assisted code, and if you cannot explain why a change was
+      made, the PR will be closed."
+
+Heuristic extraction: always read the sources before relying on this. Not legal advice.

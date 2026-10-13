@@ -1,0 +1,51 @@
+contribpolicy · tektoncd/pipeline
+
+AI use               DISCLOSE  (AI assistance is allowed if you disclose it)
+Disclosure           required in: description, commit-trailer
+  example            "Assisted-by: Claude 3.5 Sonnet"
+Assisted-by trailer  allowed
+AI Co-authored-by    allowed
+Human-only           -
+Issue first          no
+Assignment required  no
+Required labels      -
+DCO / CLA / signed   DCO no  ·  CLA no  ·  signed+verified commits no
+UI screenshots       -
+
+Sources
+  [repo]         CONTRIBUTING.md
+                 https://github.com/tektoncd/pipeline/blob/HEAD/CONTRIBUTING.md
+  [repo]         AGENTS.md
+                 https://github.com/tektoncd/pipeline/blob/HEAD/AGENTS.md
+  [repo]         .github/pull_request_template.md
+                 https://github.com/tektoncd/pipeline/blob/HEAD/.github/pull_request_template.md
+  [linked]       api_compatibility_policy.md
+                 https://github.com/tektoncd/pipeline/blob/HEAD/api_compatibility_policy.md
+  [linked]       DEVELOPMENT.md
+                 https://github.com/tektoncd/pipeline/blob/HEAD/DEVELOPMENT.md
+  [org registry] registry:tektoncd/community:ai-contribution-policy.md  Tekton AI Contribution Policy
+                 https://github.com/tektoncd/community/blob/main/ai-contribution-policy.md
+
+Evidence
+  disclosure.required  (registry:tektoncd/community:ai-contribution-policy.md:7)
+      "All AI usage must be disclosed."
+  disclosure.required  (registry:tektoncd/community:ai-contribution-policy.md:7)
+      "You should state the extent that the work was AI-assisted."
+  disclosure.where.commit-trailer  (registry:tektoncd/community:ai-contribution-policy.md:27)
+      "Preferred: Git commit message trailer"
+  disclosure.where.description  (registry:tektoncd/community:ai-contribution-policy.md:34)
+      "Alternative: Pull request description"
+  trailers.assisted_by  (registry:tektoncd/community:ai-contribution-policy.md:31)
+      "Assisted-by: Claude 3.5 Sonnet"
+  trailers.co_authored_by_ai  (registry:tektoncd/community:ai-contribution-policy.md:7)
+      "Mentioning the specific tool (e.g., Claude, Copilot, ChatGPT) is encouraged, as it can help reviewers
+      understand the generated code and some tools support `Co-authored-by` trailers natively."
+  guidance.run_tests  (registry:tektoncd/community:ai-contribution-policy.md:11)
+      "Please review, understand, and test all AI-generated content before submitting."
+  guidance.size_limit  (registry:tektoncd/community:ai-contribution-policy.md:47)
+      "Keep pull requests small and focused — AI tools make it easy to generate large changes, but the review
+      burden remains on maintainers"
+  guidance.explain_change  (registry:tektoncd/community:ai-contribution-policy.md:49)
+      "You must not submit code that you do not understand."
+
+Heuristic extraction: always read the sources before relying on this. Not legal advice.

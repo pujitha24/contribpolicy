@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "repo": "grafana/mimir",
+  "sources": [
+    {
+      "path": "CONTRIBUTING.md",
+      "url": "https://github.com/grafana/mimir/blob/HEAD/CONTRIBUTING.md",
+      "kind": "repo"
+    },
+    {
+      "path": "AGENTS.md",
+      "url": "https://github.com/grafana/mimir/blob/HEAD/AGENTS.md",
+      "kind": "repo"
+    },
+    {
+      "path": "CLAUDE.md",
+      "url": "https://github.com/grafana/mimir/blob/HEAD/CLAUDE.md",
+      "kind": "repo"
+    },
+    {
+      "path": ".github/pull_request_template.md",
+      "url": "https://github.com/grafana/mimir/blob/HEAD/.github/pull_request_template.md",
+      "kind": "repo"
+    },
+    {
+      "path": "docs/internal/contributing/README.md",
+      "url": "https://github.com/grafana/mimir/blob/HEAD/docs/internal/contributing/README.md",
+      "kind": "linked"
+    }
+  ],
+  "ai_use": "unspecified",
+  "disclosure": {
+    "required": false,
+    "where": [],
+    "example": ""
+  },
+  "trailers": {
+    "assisted_by": "unspecified",
+    "co_authored_by_ai": "unspecified"
+  },
+  "human_only": [],
+  "assignment_required": false,
+  "issue_first": false,
+  "required_labels": [],
+  "dco": false,
+  "cla": false,
+  "signed_commits": true,
+  "ui_screenshots_required": false,
+  "evidence": [
+    {
+      "rule": "signed_commits",
+      "quote": "Use signed and verified commits",
+      "path": "docs/internal/contributing/README.md",
+      "line": 24
+    },
+    {
+      "rule": "signed_commits",
+      "quote": "Effective June 22, 2026, all Grafana Labs repositories, including Mimir, require signed and verified commits.",
+      "path": "docs/internal/contributing/README.md",
+      "line": 26
+    }
+  ]
+}

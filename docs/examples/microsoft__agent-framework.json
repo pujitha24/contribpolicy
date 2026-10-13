@@ -1,0 +1,163 @@
+{
+  "version": 1,
+  "repo": "microsoft/agent-framework",
+  "sources": [
+    {
+      "path": "CONTRIBUTING.md",
+      "url": "https://github.com/microsoft/agent-framework/blob/HEAD/CONTRIBUTING.md",
+      "kind": "repo"
+    },
+    {
+      "path": "AI_CONTRIBUTIONS.md",
+      "url": "https://github.com/microsoft/agent-framework/blob/HEAD/AI_CONTRIBUTIONS.md",
+      "kind": "repo"
+    },
+    {
+      "path": ".github/copilot-instructions.md",
+      "url": "https://github.com/microsoft/agent-framework/blob/HEAD/.github/copilot-instructions.md",
+      "kind": "repo"
+    },
+    {
+      "path": ".github/pull_request_template.md",
+      "url": "https://github.com/microsoft/agent-framework/blob/HEAD/.github/pull_request_template.md",
+      "kind": "repo"
+    },
+    {
+      "path": "dotnet/AGENTS.md",
+      "url": "https://github.com/microsoft/agent-framework/blob/HEAD/dotnet/AGENTS.md",
+      "kind": "linked"
+    },
+    {
+      "path": "python/AGENTS.md",
+      "url": "https://github.com/microsoft/agent-framework/blob/HEAD/python/AGENTS.md",
+      "kind": "linked"
+    }
+  ],
+  "ai_use": "disclose",
+  "disclosure": {
+    "required": true,
+    "where": [
+      "description",
+      "checkbox"
+    ],
+    "example": "[x] This is an AI-assisted contribution."
+  },
+  "trailers": {
+    "assisted_by": "unspecified",
+    "co_authored_by_ai": "unspecified"
+  },
+  "human_only": [
+    "review-replies"
+  ],
+  "assignment_required": false,
+  "issue_first": true,
+  "required_labels": [],
+  "dco": false,
+  "cla": false,
+  "signed_commits": false,
+  "ui_screenshots_required": false,
+  "evidence": [
+    {
+      "rule": "disclosure.required",
+      "quote": "Complete the AI assistance disclosure in the pull request template.",
+      "path": "CONTRIBUTING.md",
+      "line": 236
+    },
+    {
+      "rule": "disclosure.where.checkbox",
+      "quote": "Complete the AI assistance disclosure in the pull request template.",
+      "path": "CONTRIBUTING.md",
+      "line": 236
+    },
+    {
+      "rule": "disclosure.required",
+      "quote": "Disclose Material AI Assistance",
+      "path": "AI_CONTRIBUTIONS.md",
+      "line": 25
+    },
+    {
+      "rule": "disclosure.required",
+      "quote": "Disclose material AI assistance in the issue or pull request description.",
+      "path": "AI_CONTRIBUTIONS.md",
+      "line": 27
+    },
+    {
+      "rule": "disclosure.where.description",
+      "quote": "Disclose material AI assistance in the issue or pull request description.",
+      "path": "AI_CONTRIBUTIONS.md",
+      "line": 27
+    },
+    {
+      "rule": "disclosure.where.checkbox",
+      "quote": "For a pull request, complete the AI Assistance section of the pull request template and check exactly one option.",
+      "path": "AI_CONTRIBUTIONS.md",
+      "line": 27
+    },
+    {
+      "rule": "disclosure.where.checkbox",
+      "quote": "[ ] No material AI assistance was used.",
+      "path": ".github/pull_request_template.md",
+      "line": 46
+    },
+    {
+      "rule": "disclosure.where.checkbox",
+      "quote": "[ ] This is an AI-assisted contribution.",
+      "path": ".github/pull_request_template.md",
+      "line": 47
+    },
+    {
+      "rule": "disclosure.where.description",
+      "quote": "If this is an AI-assisted contribution, briefly identify the assisted areas, such as implementation, tests, documentation, design, or this PR description.",
+      "path": ".github/pull_request_template.md",
+      "line": 49
+    },
+    {
+      "rule": "human_only.review-replies",
+      "quote": "Be able to explain the change and respond to review feedback themselves.",
+      "path": "AI_CONTRIBUTIONS.md",
+      "line": 44
+    },
+    {
+      "rule": "issue_first",
+      "quote": "File an issue and agree on the problem and direction before investing in implementation.",
+      "path": "CONTRIBUTING.md",
+      "line": 119
+    },
+    {
+      "rule": "issue_first",
+      "quote": "Complete the issue-first process.",
+      "path": "CONTRIBUTING.md",
+      "line": 220
+    },
+    {
+      "rule": "issue_first",
+      "quote": "For non-trivial changes, start with an issue and wait for a maintainer to add the `ready-for-implementation` label or explicitly agree with the direction before starting implementation, as described in the Contribution Guidelines.",
+      "path": "AI_CONTRIBUTIONS.md",
+      "line": 94
+    },
+    {
+      "rule": "guidance.review_ai_output",
+      "quote": "Review all submitted content rather than forwarding generated output.",
+      "path": "AI_CONTRIBUTIONS.md",
+      "line": 42
+    },
+    {
+      "rule": "guidance.explain_change",
+      "quote": "Be able to explain the change and respond to review feedback themselves.",
+      "path": "AI_CONTRIBUTIONS.md",
+      "line": 44
+    },
+    {
+      "rule": "guidance.run_tests",
+      "quote": "Run the relevant builds, tests, formatting, and static analysis.",
+      "path": "AI_CONTRIBUTIONS.md",
+      "line": 58
+    },
+    {
+      "rule": "guidance.size_limit",
+      "quote": "Keep each contribution focused on one agreed problem.",
+      "path": "AI_CONTRIBUTIONS.md",
+      "line": 97
+    }
+  ]
+}

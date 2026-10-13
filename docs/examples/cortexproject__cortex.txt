@@ -1,0 +1,53 @@
+contribpolicy · cortexproject/cortex
+
+AI use               DISCLOSE  (AI assistance is allowed if you disclose it)
+Disclosure           required in: description
+Assisted-by trailer  unspecified
+AI Co-authored-by    unspecified
+Human-only           review-replies, issues
+Issue first          no
+Assignment required  no
+Required labels      -
+DCO / CLA / signed   DCO yes  ·  CLA no  ·  signed+verified commits no
+UI screenshots       -
+
+Sources
+  [repo]         CONTRIBUTING.md
+                 https://github.com/cortexproject/cortex/blob/HEAD/CONTRIBUTING.md
+  [repo]         GENAI_POLICY.md
+                 https://github.com/cortexproject/cortex/blob/HEAD/GENAI_POLICY.md
+  [repo]         AGENTS.md
+                 https://github.com/cortexproject/cortex/blob/HEAD/AGENTS.md
+  [repo]         CLAUDE.md
+                 https://github.com/cortexproject/cortex/blob/HEAD/CLAUDE.md
+  [repo]         .github/pull_request_template.md
+                 https://github.com/cortexproject/cortex/blob/HEAD/.github/pull_request_template.md
+  [linked]       docs/contributing/design-patterns-and-conventions.md
+                 https://github.com/cortexproject/cortex/blob/HEAD/docs/contributing/design-patterns-and-conventions.md
+
+Evidence
+  disclosure.required  (GENAI_POLICY.md:27)
+      "Disclose significant AI usage."
+  disclosure.required  (GENAI_POLICY.md:27)
+      "If AI generated the bulk of a contribution (e.g., an entire new feature, large refactors, or
+      substantial documentation), note this in the PR description."
+  disclosure.where.description  (GENAI_POLICY.md:27)
+      "If AI generated the bulk of a contribution (e.g., an entire new feature, large refactors, or
+      substantial documentation), note this in the PR description."
+  human_only.review-replies  (GENAI_POLICY.md:35)
+      "Issues, pull request reviews, and discussions must be substantively human-authored."
+  human_only.issues  (GENAI_POLICY.md:35)
+      "Issues, pull request reviews, and discussions must be substantively human-authored."
+  dco  (GENAI_POLICY.md:29)
+      "Honour the DCO."
+  dco  (GENAI_POLICY.md:29)
+      "Your `Signed-off-by` line on each commit certifies the Developer Certificate of Origin for all content
+      in that commit, including any AI-generated portions."
+  dco  (AGENTS.md:114)
+      "Sign commits with DCO: `git commit -s -m "message"`"
+  guidance.explain_change  (GENAI_POLICY.md:23)
+      "Understand every line you submit."
+  guidance.review_ai_output  (GENAI_POLICY.md:25)
+      "Review and validate AI output."
+
+Heuristic extraction: always read the sources before relying on this. Not legal advice.

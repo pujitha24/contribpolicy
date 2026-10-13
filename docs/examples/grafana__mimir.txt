@@ -1,0 +1,33 @@
+contribpolicy · grafana/mimir
+
+AI use               UNSPECIFIED  (no AI policy found)
+Disclosure           not required (none found)
+Assisted-by trailer  unspecified
+AI Co-authored-by    unspecified
+Human-only           -
+Issue first          no
+Assignment required  no
+Required labels      -
+DCO / CLA / signed   DCO no  ·  CLA no  ·  signed+verified commits yes
+UI screenshots       -
+
+Sources
+  [repo]         CONTRIBUTING.md
+                 https://github.com/grafana/mimir/blob/HEAD/CONTRIBUTING.md
+  [repo]         AGENTS.md
+                 https://github.com/grafana/mimir/blob/HEAD/AGENTS.md
+  [repo]         CLAUDE.md
+                 https://github.com/grafana/mimir/blob/HEAD/CLAUDE.md
+  [repo]         .github/pull_request_template.md
+                 https://github.com/grafana/mimir/blob/HEAD/.github/pull_request_template.md
+  [linked]       docs/internal/contributing/README.md
+                 https://github.com/grafana/mimir/blob/HEAD/docs/internal/contributing/README.md
+
+Evidence
+  signed_commits  (docs/internal/contributing/README.md:24)
+      "Use signed and verified commits"
+  signed_commits  (docs/internal/contributing/README.md:26)
+      "Effective June 22, 2026, all Grafana Labs repositories, including Mimir, require signed and verified
+      commits."
+
+Heuristic extraction: always read the sources before relying on this. Not legal advice.

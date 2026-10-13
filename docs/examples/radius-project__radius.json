@@ -1,0 +1,195 @@
+{
+  "version": 1,
+  "repo": "radius-project/radius",
+  "sources": [
+    {
+      "path": "CONTRIBUTING.md",
+      "url": "https://github.com/radius-project/radius/blob/HEAD/CONTRIBUTING.md",
+      "kind": "repo"
+    },
+    {
+      "path": "AGENTS.md",
+      "url": "https://github.com/radius-project/radius/blob/HEAD/AGENTS.md",
+      "kind": "repo"
+    },
+    {
+      "path": ".github/copilot-instructions.md",
+      "url": "https://github.com/radius-project/radius/blob/HEAD/.github/copilot-instructions.md",
+      "kind": "repo"
+    },
+    {
+      "path": ".github/pull_request_template.md",
+      "url": "https://github.com/radius-project/radius/blob/HEAD/.github/pull_request_template.md",
+      "kind": "repo"
+    },
+    {
+      "path": "docs/contributing/README.md",
+      "url": "https://github.com/radius-project/radius/blob/HEAD/docs/contributing/README.md",
+      "kind": "linked"
+    },
+    {
+      "path": "docs/contributing/contributing-code/contributing-code-first-commit/first-commit-06-creating-a-pr/index.md",
+      "url": "https://github.com/radius-project/radius/blob/HEAD/docs/contributing/contributing-code/contributing-code-first-commit/first-commit-06-creating-a-pr/index.md",
+      "kind": "linked"
+    },
+    {
+      "path": "docs/contributing/contributing-pull-requests/README.md",
+      "url": "https://github.com/radius-project/radius/blob/HEAD/docs/contributing/contributing-pull-requests/README.md",
+      "kind": "linked"
+    },
+    {
+      "path": ".github/instructions/code-review.instructions.md",
+      "url": "https://github.com/radius-project/radius/blob/HEAD/.github/instructions/code-review.instructions.md",
+      "kind": "linked"
+    },
+    {
+      "path": "docs/contributing/contributing-code/contributing-code-first-commit/README.md",
+      "url": "https://github.com/radius-project/radius/blob/HEAD/docs/contributing/contributing-code/contributing-code-first-commit/README.md",
+      "kind": "linked"
+    },
+    {
+      "path": "docs/contributing/triage/triage-process.md",
+      "url": "https://github.com/radius-project/radius/blob/HEAD/docs/contributing/triage/triage-process.md",
+      "kind": "linked"
+    },
+    {
+      "path": "docs/contributing/contributing-code/contributing-code-prerequisites/README.md",
+      "url": "https://github.com/radius-project/radius/blob/HEAD/docs/contributing/contributing-code/contributing-code-prerequisites/README.md",
+      "kind": "linked"
+    },
+    {
+      "path": "docs/contributing/contributing-code/contributing-code-building/README.md",
+      "url": "https://github.com/radius-project/radius/blob/HEAD/docs/contributing/contributing-code/contributing-code-building/README.md",
+      "kind": "linked"
+    },
+    {
+      "path": "docs/contributing/contributing-code/contributing-code-tests/README.md",
+      "url": "https://github.com/radius-project/radius/blob/HEAD/docs/contributing/contributing-code/contributing-code-tests/README.md",
+      "kind": "linked"
+    }
+  ],
+  "ai_use": "restricted",
+  "disclosure": {
+    "required": false,
+    "where": [],
+    "example": ""
+  },
+  "trailers": {
+    "assisted_by": "unspecified",
+    "co_authored_by_ai": "unspecified"
+  },
+  "human_only": [],
+  "assignment_required": false,
+  "issue_first": true,
+  "required_labels": [
+    [
+      "triaged"
+    ],
+    [
+      "help wanted",
+      "good first issue"
+    ]
+  ],
+  "dco": true,
+  "cla": false,
+  "signed_commits": true,
+  "ui_screenshots_required": false,
+  "evidence": [
+    {
+      "rule": "ai_use",
+      "quote": "External contributors using an AI agent, coding bot, or other automation must restrict their contributions to open issues labeled `triaged` and either `help wanted` or `good first issue`.",
+      "path": "CONTRIBUTING.md",
+      "line": 30
+    },
+    {
+      "rule": "ai_use",
+      "quote": "External contributors using an AI agent, coding bot, or other automation may implement an issue and open a pull request only when the issue is open, has the `triaged` label, and has either the `help wanted` or `good first issue` label.",
+      "path": "AGENTS.md",
+      "line": 7
+    },
+    {
+      "rule": "ai_use",
+      "quote": "External contributors using an AI agent, coding bot, or other automation may only implement an open issue that has the `triaged` label and either the `help wanted` or `good first issue` label.",
+      "path": "docs/contributing/contributing-pull-requests/README.md",
+      "line": 12
+    },
+    {
+      "rule": "required_labels",
+      "quote": "External contributors using an AI agent, coding bot, or other automation must restrict their contributions to open issues labeled `triaged` and either `help wanted` or `good first issue`.",
+      "path": "CONTRIBUTING.md",
+      "line": 30
+    },
+    {
+      "rule": "required_labels",
+      "quote": "External contributors using an AI agent, coding bot, or other automation may implement an issue and open a pull request only when the issue is open, has the `triaged` label, and has either the `help wanted` or `good first issue` label.",
+      "path": "AGENTS.md",
+      "line": 7
+    },
+    {
+      "rule": "required_labels",
+      "quote": "External contributors using an AI agent, coding bot, or other automation must choose an open issue that is labeled `triaged` and either `help wanted` or `good first issue`.",
+      "path": "docs/contributing/contributing-code/contributing-code-first-commit/first-commit-06-creating-a-pr/index.md",
+      "line": 7
+    },
+    {
+      "rule": "required_labels",
+      "quote": "External contributors using an AI agent, coding bot, or other automation may only implement an open issue that has the `triaged` label and either the `help wanted` or `good first issue` label.",
+      "path": "docs/contributing/contributing-pull-requests/README.md",
+      "line": 12
+    },
+    {
+      "rule": "issue_first",
+      "quote": "For other changes, start by choosing an existing issue or opening an issue.",
+      "path": "CONTRIBUTING.md",
+      "line": 29
+    },
+    {
+      "rule": "dco",
+      "quote": "The Radius project follows the Developer Certificate of Origin.",
+      "path": "CONTRIBUTING.md",
+      "line": 36
+    },
+    {
+      "rule": "dco",
+      "quote": "Contributors sign-off that they adhere to these requirements by adding a Signed-off-by line to commit messages.",
+      "path": "CONTRIBUTING.md",
+      "line": 38
+    },
+    {
+      "rule": "dco",
+      "quote": "Read CONTRIBUTING.md for the contribution process, the Developer Certificate of Origin sign-off requirement, and links to the issue and pull-request guides.",
+      "path": "AGENTS.md",
+      "line": 48
+    },
+    {
+      "rule": "dco",
+      "quote": "Radius leverages the Developer Certificate of Origin to certify that you have the right to submit the code you are contributing to the project.",
+      "path": "docs/contributing/contributing-code/contributing-code-first-commit/first-commit-06-creating-a-pr/index.md",
+      "line": 47
+    },
+    {
+      "rule": "signed_commits",
+      "quote": "Every commit must also be cryptographically signed so that GitHub displays a Verified badge.",
+      "path": "CONTRIBUTING.md",
+      "line": 54
+    },
+    {
+      "rule": "signed_commits",
+      "quote": "Cryptographic signing is separate from the DCO `Signed-off-by` line; both are required.",
+      "path": "CONTRIBUTING.md",
+      "line": 54
+    },
+    {
+      "rule": "signed_commits",
+      "quote": "We require all contributors to cryptographically sign their commits so that they show as Verified on GitHub.",
+      "path": "docs/contributing/contributing-code/contributing-code-first-commit/first-commit-06-creating-a-pr/index.md",
+      "line": 55
+    },
+    {
+      "rule": "signed_commits",
+      "quote": "Every commit must also be cryptographically signed so that GitHub displays a Verified badge.",
+      "path": "docs/contributing/contributing-pull-requests/README.md",
+      "line": 83
+    }
+  ]
+}

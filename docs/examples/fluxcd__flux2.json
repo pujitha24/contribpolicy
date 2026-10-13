@@ -1,0 +1,196 @@
+{
+  "version": 1,
+  "repo": "fluxcd/flux2",
+  "sources": [
+    {
+      "path": "CONTRIBUTING.md",
+      "url": "https://github.com/fluxcd/flux2/blob/HEAD/CONTRIBUTING.md",
+      "kind": "repo"
+    },
+    {
+      "path": "AGENTS.md",
+      "url": "https://github.com/fluxcd/flux2/blob/HEAD/AGENTS.md",
+      "kind": "repo"
+    },
+    {
+      "path": "registry:fluxcd/.github:CONTRIBUTING.md",
+      "url": "https://github.com/fluxcd/.github/blob/main/CONTRIBUTING.md",
+      "kind": "org"
+    }
+  ],
+  "ai_use": "disclose",
+  "disclosure": {
+    "required": true,
+    "where": [
+      "description",
+      "commit-trailer"
+    ],
+    "example": "Assisted-by: copilot/gpt-5.4"
+  },
+  "trailers": {
+    "assisted_by": "required",
+    "co_authored_by_ai": "banned"
+  },
+  "human_only": [
+    "review-replies"
+  ],
+  "assignment_required": false,
+  "issue_first": true,
+  "required_labels": [],
+  "dco": true,
+  "cla": false,
+  "signed_commits": false,
+  "ui_screenshots_required": false,
+  "evidence": [
+    {
+      "rule": "disclosure.required",
+      "quote": "You should disclose the use of AI Agents in the description of your PR and in the commit message using the `Assisted-by: AGENT_NAME/LLM_VERSION` tag.",
+      "path": "CONTRIBUTING.md",
+      "line": 42
+    },
+    {
+      "rule": "disclosure.where.description",
+      "quote": "You should disclose the use of AI Agents in the description of your PR and in the commit message using the `Assisted-by: AGENT_NAME/LLM_VERSION` tag.",
+      "path": "CONTRIBUTING.md",
+      "line": 42
+    },
+    {
+      "rule": "disclosure.where.commit-trailer",
+      "quote": "You should disclose the use of AI Agents in the description of your PR and in the commit message using the `Assisted-by: AGENT_NAME/LLM_VERSION` tag.",
+      "path": "CONTRIBUTING.md",
+      "line": 42
+    },
+    {
+      "rule": "disclosure.where.commit-trailer",
+      "quote": "Example of a commit message disclosing the use of AI assistance:",
+      "path": "CONTRIBUTING.md",
+      "line": 54
+    },
+    {
+      "rule": "disclosure.required",
+      "quote": "Disclose AI assistance with an `Assisted-by` trailer naming your agent and model:",
+      "path": "AGENTS.md",
+      "line": 10
+    },
+    {
+      "rule": "disclosure.where.commit-trailer",
+      "quote": "Disclose AI assistance with an `Assisted-by` trailer naming your agent and model:",
+      "path": "AGENTS.md",
+      "line": 10
+    },
+    {
+      "rule": "disclosure.required",
+      "quote": "You should disclose the use of AI Agents in the description of your PR and in the commit message using the `Assisted-by: AGENT_NAME/LLM_VERSION` tag.",
+      "path": "registry:fluxcd/.github:CONTRIBUTING.md",
+      "line": 42
+    },
+    {
+      "rule": "disclosure.where.description",
+      "quote": "You should disclose the use of AI Agents in the description of your PR and in the commit message using the `Assisted-by: AGENT_NAME/LLM_VERSION` tag.",
+      "path": "registry:fluxcd/.github:CONTRIBUTING.md",
+      "line": 42
+    },
+    {
+      "rule": "disclosure.where.commit-trailer",
+      "quote": "You should disclose the use of AI Agents in the description of your PR and in the commit message using the `Assisted-by: AGENT_NAME/LLM_VERSION` tag.",
+      "path": "registry:fluxcd/.github:CONTRIBUTING.md",
+      "line": 42
+    },
+    {
+      "rule": "trailers.assisted_by",
+      "quote": "You should disclose the use of AI Agents in the description of your PR and in the commit message using the `Assisted-by: AGENT_NAME/LLM_VERSION` tag.",
+      "path": "CONTRIBUTING.md",
+      "line": 42
+    },
+    {
+      "rule": "trailers.assisted_by",
+      "quote": "Adding the `Assisted-by` tag to the commit message can be done with:",
+      "path": "CONTRIBUTING.md",
+      "line": 45
+    },
+    {
+      "rule": "trailers.assisted_by",
+      "quote": "Disclose AI assistance with an `Assisted-by` trailer naming your agent and model:",
+      "path": "AGENTS.md",
+      "line": 10
+    },
+    {
+      "rule": "trailers.assisted_by",
+      "quote": "git commit -s -m \"Add support for X\" --trailer \"Assisted-by: <agent-name>/<model-id>\"",
+      "path": "AGENTS.md",
+      "line": 12
+    },
+    {
+      "rule": "trailers.co_authored_by_ai",
+      "quote": "AI Agents must not add `Signed-off-by` or `Co-authored-by` tags to the commit message.",
+      "path": "CONTRIBUTING.md",
+      "line": 39
+    },
+    {
+      "rule": "trailers.co_authored_by_ai",
+      "quote": "Do not add `Signed-off-by` or `Co-authored-by` trailers with your agent name.",
+      "path": "AGENTS.md",
+      "line": 9
+    },
+    {
+      "rule": "trailers.co_authored_by_ai",
+      "quote": "AI Agents must not add `Signed-off-by` or `Co-authored-by` tags to the commit message.",
+      "path": "registry:fluxcd/.github:CONTRIBUTING.md",
+      "line": 39
+    },
+    {
+      "rule": "human_only.review-replies",
+      "quote": "When engaging with Flux maintainers please refrain from using AI Agents to generate responses, we want to talk to you, not to your AI Agent.",
+      "path": "CONTRIBUTING.md",
+      "line": 36
+    },
+    {
+      "rule": "human_only.review-replies",
+      "quote": "When engaging with Flux maintainers please refrain from using AI Agents to generate responses, we want to talk to you, not to your AI Agent.",
+      "path": "registry:fluxcd/.github:CONTRIBUTING.md",
+      "line": 36
+    },
+    {
+      "rule": "issue_first",
+      "quote": "Addressing an open issue, if one doesn't exist, please open an issue to discuss the problem and the proposed solution before submitting a PR.",
+      "path": "CONTRIBUTING.md",
+      "line": 86
+    },
+    {
+      "rule": "issue_first",
+      "quote": "Addressing an open issue, if one doesn't exist, please open an issue to discuss the problem and the proposed solution before submitting a PR.",
+      "path": "registry:fluxcd/.github:CONTRIBUTING.md",
+      "line": 73
+    },
+    {
+      "rule": "dco",
+      "quote": "AI Agents must not add `Signed-off-by` or `Co-authored-by` tags to the commit message.",
+      "path": "CONTRIBUTING.md",
+      "line": 39
+    },
+    {
+      "rule": "dco",
+      "quote": "Only humans can legally certify the Developer Certificate of Origin (DCO).",
+      "path": "CONTRIBUTING.md",
+      "line": 40
+    },
+    {
+      "rule": "dco",
+      "quote": "Do not add `Signed-off-by` or `Co-authored-by` trailers with your agent name.",
+      "path": "AGENTS.md",
+      "line": 9
+    },
+    {
+      "rule": "dco",
+      "quote": "Only a human can legally certify the DCO.",
+      "path": "AGENTS.md",
+      "line": 9
+    },
+    {
+      "rule": "guidance.run_tests",
+      "quote": "Run tests locally before pushing.",
+      "path": "AGENTS.md",
+      "line": 21
+    }
+  ]
+}

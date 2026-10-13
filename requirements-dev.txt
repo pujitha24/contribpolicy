@@ -1,0 +1,7 @@
+# Development and CI dependencies. Pinned exactly; each version was released at
+# least 72 hours before it was adopted (checked on PyPI, 2026-10-12).
+pytest==9.1.1
+pytest-cov==7.1.0
+ruff==0.16.10
+# Only used by the tests, to prove the built-in YAML emitter produces valid YAML.
+PyYAML==6.0.3
