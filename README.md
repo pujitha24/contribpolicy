@@ -15,7 +15,7 @@ The rules also differ from project to project. Flux *requires* an `Assisted-by:`
 ## 30-second quick start
 
 ```console
-$ pipx install contribpolicy          # or: pip install contribpolicy
+$ pipx install git+https://github.com/pujitha24/contribpolicy@v0.1.0   # PyPI release coming soon
 
 $ contribpolicy show thanos-io/thanos          # any public repo, via the GitHub API
 $ contribpolicy show .                         # a local checkout
@@ -170,7 +170,7 @@ jobs:
       - uses: actions/checkout@<full-commit-sha>   # pin to a SHA
         with:
           fetch-depth: 0
-      - run: pipx install contribpolicy
+      - run: pipx install git+https://github.com/pujitha24/contribpolicy@v0.1.0
       - env:
           GITHUB_TOKEN: ${{ github.token }}
           PR_BODY: ${{ github.event.pull_request.body }}
