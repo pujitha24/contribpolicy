@@ -123,6 +123,11 @@ _DISCLOSE_HEADING = re.compile(r"(?i)\bdisclos")
 _ASSISTED = re.compile(r"(?i)\b(?:assisted-by|co-developed(?:-by)?|generated-by|ai-assisted-by)\b")
 _ASSISTED_TRAILER_TEXT = re.compile(r"(?i)\bAssisted-by:\s*[^\"'`\n]{1,80}")
 _COAUTHOR = re.compile(r"(?i)\bco-?authou?r(?:ed)?(?:-by)?\b|\bco-?sign(?:ing|ed|s)?\b|\bauthorship\s+markers?\b")
+# "No AI attribution/authorship trailers", "any AI-attribution trailers": every AI trailer, whatever its key.
+_AI_TRAILER_GENERIC = re.compile(
+    r"(?i)\b(?:attribution|authorship|credit)(?:\s*/\s*(?:attribution|authorship|credit))?[- ]trailers?\b"
+    r"|\bAI[- ](?:related[- ])?trailers?\b"
+)
 _CONSEQUENCE = re.compile(r"(?i)\b(?:breaks?|fails?|blocks?|invalidates?)\b")
 _ALT_SPLIT = re.compile(r"(?i)\b(?:instead\s+of|rather\s+than)\b")
 _CLAUSE_SPLIT = re.compile(r"(?i);|\s[—–]\s|\s--\s|,\s*but\b|\bwhereas\b|\bhowever\b")
@@ -276,6 +281,34 @@ _DCO_NOT = re.compile(
     r"(?i)\b(?:do\s+not|don['’]t|does\s+not|doesn['’]t)\s+(?:use|require|need|enforce)\b[^.]{0,20}\b(?:DCO|sign-?off|signed-off-by)"
 )
 _CLA = re.compile(r"\bCLA\b|EasyCLA|(?i:contributor\s+license\s+agreement|cla[- ]assistant)")
+# The ASF license header ("Licensed to the Apache Software Foundation (ASF) under one or more contributor
+# license agreements") describes how the ASF holds the code; it is not a requirement for contributors.
+_APACHE_HEADER = re.compile(r"(?i)\bunder\s+one\s+or\s+more\s+contributor\s+license\s+agreements?\b")
+# "We use the DCO instead of a CLA": the agreement after "instead of" is the one that is *not* used.
+_ALT_LEAD = (
+    r"(?i)\b(?:instead\s+of|rather\s+than|in\s+place\s+of|in\s+lieu\s+of|replac\w*|"
+    r"(?:switched|moved|migrated)\s+(?:away\s+)?from)\s+(?:(?:signing|using|requiring)\s+)?(?:an?\s+|the\s+|any\s+|our\s+)?"
+)
+_CLA_ALT = re.compile(_ALT_LEAD + r"(?:CLA|EasyCLA|contributor\s+license\s+agreements?)\b")
+_DCO_ALT = re.compile(
+    _ALT_LEAD + r"(?:DCO|developer\s+certificate\s+of\s+origin|sign[- ]?offs?|signoffs?|signed-off-by)"
+    r"(?:[- ]sign[- ]?offs?)?(?:\s+(?:lines?|trailers?))?\b"
+)
+# "A CLA is only required for larger changes": a CLA, but not for every contribution.
+_CLA_CONDITIONAL = re.compile(
+    r"(?i)\b(?:large|larger|significant|substantial|substantive|major|bigger|non-?trivial)\s+"
+    r"(?:\w+\s+)?(?:changes?|contributions?|patches|PRs?|pull\s+requests|features?|work)\b"
+    r"|\b(?:trivial|small|minor|typo|one-line)\s+(?:\w+\s+)?(?:changes?|contributions?|fixes|patches|PRs?|pull\s+requests)\b"
+    r"[^.]{0,60}\b(?:do\s+not|don['’]t|does\s+not|doesn['’]t|never|are\s+exempt|is\s+exempt|not)\b"
+    r"|\bexcept\s+(?:for\s+)?(?:trivial|small|minor|typo|one-line)\b"
+    r"|\b(?:not|no)\b[^.]{0,60}\bfor\s+(?:\w+\s+)?(?:trivial|small|minor|typo|one-line)\b"
+    r"|\bmore\s+than\s+\d+\s+lines\b"
+)
+# "only with maintainer sign-off" is an approval, not the DCO.
+_APPROVAL_SIGNOFF = re.compile(
+    r"(?i)\b(?:maintainers?|reviewers?|approvers?|owners?|team|lead|manager)['’]?s?\s+sign[- ]?off\b"
+    r"|\bsign[- ]?off\s+(?:from|by)\s+(?:an?\s+|the\s+)?(?:maintainers?|reviewers?|approvers?|owners?|team)\b"
+)
 _SIGNED_STRONG = re.compile(
     r"(?i:\bsigned\s+and\s+verified\b|\bcryptographic\w*\b|\bGPG\b|\bSSH\s+(?:signing\s+)?keys?\b|\bsigning\s+keys?\b|"
     r"\bverified\s+(?:badge|commits?|signatures?)\b|\bcommit\s+signature\s+verification\b|\bvigilant\s+mode\b|\bgpgsign\b)"
@@ -412,7 +445,8 @@ def _trailers(ctx: _Ctx, acc: _Acc) -> None:
     text = ctx.text
     has_assisted = bool(_ASSISTED.search(text))
     has_coauthor = bool(_COAUTHOR.search(text)) and (ctx.ai or ctx.agent_doc)
-    if not (has_assisted or has_coauthor):
+    has_generic = bool(_AI_TRAILER_GENERIC.search(text)) and (ctx.ai or ctx.agent_doc)
+    if not (has_assisted or has_coauthor or has_generic):
         return
 
     def classify(clause: str, forced_neg: bool = False) -> str | None:
@@ -452,6 +486,16 @@ def _trailers(ctx: _Ctx, acc: _Acc) -> None:
                         v = "allowed"
                 if v:
                     acc.coauthor.setdefault(v, []).append(acc.add("trailers.co_authored_by_ai", ctx, v))
+            if _AI_TRAILER_GENERIC.search(seg) and (ctx.ai or ctx.agent_doc) and not alt:
+                # A ban on AI trailers in general covers Assisted-by too, and Co-authored-by unless the
+                # sentence names it (then the explicit rule above decides).
+                if classify(seg) == "banned":
+                    if not _ASSISTED.search(seg):
+                        acc.assisted.setdefault("banned", []).append(acc.add("trailers.assisted_by", ctx, "banned"))
+                    if not _COAUTHOR.search(text):
+                        acc.coauthor.setdefault("banned", []).append(
+                            acc.add("trailers.co_authored_by_ai", ctx, "banned")
+                        )
 
 
 def _disclosure(ctx: _Ctx, acc: _Acc) -> None:
@@ -647,22 +691,29 @@ def _workflow(ctx: _Ctx, acc: _Acc) -> None:
             acc.add("issue_first", ctx, "true")
     # DCO / CLA
     if u.kind != "heading":
+        dco_text = _APPROVAL_SIGNOFF.sub(" ", _DCO_ALT.sub(" ", text))
         if (
-            _DCO.search(text)
+            _DCO.search(dco_text)
             and not _DCO_NOT.search(text)
             and not _LEGAL_NOT.search(text)
             and not _NOT_REQUIRED.search(text)
         ):
             acc.flags["dco"] = True
             acc.add("dco", ctx, "true")
-        if (
-            _CLA.search(text)
-            and not _NOT_REQUIRED.search(text)
-            and not _LEGAL_NOT.search(text)
-            and not re.search(r"(?i)\bno\s+(?:formal\s+)?(?:CLA|contributor\s+license)\b", text)
-        ):
-            acc.flags["cla"] = True
-            acc.add("cla", ctx, "true")
+        cla_text = _CLA_ALT.sub(" ", _APACHE_HEADER.sub(" ", text))
+        if _CLA.search(cla_text):
+            if _CLA_CONDITIONAL.search(cla_text):
+                # The schema's `cla` is a boolean shared with the GitHub Action, so a conditional CLA is
+                # reported as `cla: true` with a `cla.conditional` evidence entry that carries the condition.
+                acc.flags["cla_conditional"] = True
+                acc.add("cla.conditional", ctx, "conditional")
+            elif (
+                not _NOT_REQUIRED.search(text)
+                and not _LEGAL_NOT.search(text)
+                and not re.search(r"(?i)\bno\s+(?:formal\s+)?(?:CLA|contributor\s+license)\b", text)
+            ):
+                acc.flags["cla"] = True
+                acc.add("cla", ctx, "true")
     # Signed commits
     strong = _SIGNED_STRONG.search(text)
     weak = _SIGNED_WEAK.search(text) and not _DCO.search(text)
@@ -789,7 +840,8 @@ def extract(repo: str, docs: list[Doc], sources: list[Source] | None = None) -> 
     p.assignment_required = acc.flags.get("assignment_required", False)
     p.issue_first = acc.flags.get("issue_first", False)
     p.dco = acc.flags.get("dco", False)
-    p.cla = acc.flags.get("cla", False)
+    p.cla = acc.flags.get("cla", False) or acc.flags.get("cla_conditional", False)
+    p.cla_conditional = acc.flags.get("cla_conditional", False) and not acc.flags.get("cla", False)
     p.signed_commits = acc.flags.get("signed_commits", False)
     p.ui_screenshots_required = acc.flags.get("ui_screenshots_required", False)
     p.checkbox_options = acc.checkbox_options

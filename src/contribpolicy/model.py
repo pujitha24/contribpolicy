@@ -67,6 +67,10 @@ class Policy:
     # Not serialised.
     warnings: list[str] = field(default_factory=list)
     checkbox_options: list[str] = field(default_factory=list)
+    # Not serialised (``cla`` stays a boolean in the shared schema): every CLA statement found
+    # applies only to some contributions, e.g. "a CLA is only required for larger changes".
+    # Recorded in the JSON as a ``cla.conditional`` evidence entry.
+    cla_conditional: bool = False
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -101,7 +105,8 @@ class Policy:
             raise ValueError(f"unsupported policy schema version: {d.get('version')!r}")
         disc = d.get("disclosure") or {}
         tr = d.get("trailers") or {}
-        return cls(
+        rules = {e.get("rule") for e in d.get("evidence", [])}
+        p = cls(
             repo=d.get("repo", ""),
             sources=[Source(s["path"], s.get("url", ""), s.get("kind", "repo")) for s in d.get("sources", [])],
             ai_use=d.get("ai_use", "unspecified"),
@@ -123,6 +128,8 @@ class Policy:
                 for e in d.get("evidence", [])
             ],
         )
+        p.cla_conditional = p.cla and "cla.conditional" in rules and "cla" not in rules
+        return p
 
     def evidence_for(self, prefix: str) -> list[Evidence]:
         return [e for e in self.evidence if e.rule == prefix or e.rule.startswith(prefix + ".")]

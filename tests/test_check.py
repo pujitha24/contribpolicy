@@ -331,3 +331,27 @@ def test_pr_description_footer_rules():
     assert rules(res) == ["human_only.pr-description"]
     p2 = Policy(repo="a/b", co_authored_by_ai="banned")
     assert rules(run_check(p2, "Body\n\n🤖 Generated with Claude", []), "warning") == ["trailers.co_authored_by_ai"]
+
+
+def test_conditional_cla_reminder_says_it_depends():
+    p = Policy.from_dict(
+        {
+            "version": 1,
+            "repo": "acme/x",
+            "cla": True,
+            "evidence": [
+                {
+                    "rule": "cla.conditional",
+                    "quote": "A CLA is only required for larger changes.",
+                    "path": "CONTRIBUTING.md",
+                    "line": 3,
+                }
+            ],
+        }
+    )
+    res = run_check(p, "Small fix.", [])
+    cla = [f for f in res.findings if f.rule == "cla"]
+    assert len(cla) == 1 and cla[0].severity == "reminder"
+    assert "only for some changes" in cla[0].message
+    assert cla[0].evidence[0].rule == "cla.conditional"
+    assert not res.violations

@@ -4,7 +4,7 @@ import pytest
 
 from conftest import FIXTURES, ev, policy_from_text
 from contribpolicy.extract import Doc, extract, role_for_path
-from contribpolicy.model import Source
+from contribpolicy.model import Policy, Source
 
 # --- role detection ---------------------------------------------------------
 
@@ -384,3 +384,141 @@ def test_evidence_is_grouped_by_rule_in_document_order():
     )
     rules = [e.rule for e in p.evidence]
     assert rules.index("disclosure.required") < rules.index("trailers.assisted_by") < rules.index("dco")
+
+
+# --- 0.1.1: CLA / DCO false positives -------------------------------------------
+
+
+APACHE_HEADER = """\
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0.
+-->
+
+# Contributing
+
+Thanks for helping out! Please open an issue first for any new feature.
+"""
+
+
+def test_apache_license_header_is_not_a_cla_requirement():
+    p = policy_from_text(APACHE_HEADER)
+    assert p.cla is False
+    assert ev(p, "cla") == [] and ev(p, "cla.conditional") == []
+
+
+def test_apache_license_header_does_not_hide_a_real_cla_rule():
+    p = policy_from_text(APACHE_HEADER + "\nYou must sign the Contributor License Agreement before your first PR.\n")
+    assert p.cla is True and p.cla_conditional is False
+    assert ev(p, "cla")[0].quote.startswith("You must sign")
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "We use DCO instead of a CLA.",
+        "Instead of a CLA, we use the Developer Certificate of Origin.",
+        "This project uses the DCO rather than a Contributor License Agreement.",
+        "In 2024 we switched from a CLA to the DCO; sign off every commit.",
+        "The DCO sign-off replaces the CLA.",
+    ],
+)
+def test_dco_instead_of_cla_is_not_a_cla(text):
+    p = policy_from_text(f"## Legal\n\n{text}\n")
+    assert p.cla is False, [(e.rule, e.quote) for e in p.evidence]
+    assert p.dco is True
+
+
+def test_cla_instead_of_dco_is_not_a_dco():
+    p = policy_from_text("## Legal\n\nWe ask for a signed CLA instead of a DCO sign-off.\n")
+    assert p.cla is True
+    assert p.dco is False
+
+
+def test_maintainer_sign_off_is_not_the_dco():
+    p = policy_from_text(
+        "## Checks\n\nThe linter warns and never blocks; promote it to a gate only with maintainer sign-off.\n"
+    )
+    assert p.dco is False
+    p2 = policy_from_text("## Releases\n\nA release needs sign-off from a maintainer.\n")
+    assert p2.dco is False
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "A CLA is only required for larger changes.",
+        "For significant contributions, you must sign our Contributor License Agreement.",
+        "Trivial changes such as typo fixes do not require a CLA.",
+        "No CLA is needed for small fixes; anything bigger needs one.",
+        "Everyone must sign the CLA, except for trivial fixes.",
+    ],
+)
+def test_conditional_cla_is_reported_as_conditional(text):
+    p = policy_from_text(f"## Legal\n\n{text}\n")
+    assert p.cla is True and p.cla_conditional is True, [(e.rule, e.quote) for e in p.evidence]
+    assert ev(p, "cla") == [] and len(ev(p, "cla.conditional")) == 1
+    # The shared schema keeps `cla` a boolean; the condition travels as evidence.
+    d = p.to_dict()
+    assert d["cla"] is True
+    assert [e["rule"] for e in d["evidence"]] == ["cla.conditional"]
+
+
+def test_blanket_cla_wins_over_a_conditional_one():
+    p = policy_from_text(
+        "## Legal\n\nAll contributors must sign the CLA.\n\nA second CLA is only required for larger changes.\n"
+    )
+    assert p.cla is True and p.cla_conditional is False
+
+
+def test_conditional_cla_survives_json_round_trip():
+    p = policy_from_text("## Legal\n\nA CLA is only required for larger changes.\n")
+    q = Policy.from_dict(p.to_dict())
+    assert q.cla is True and q.cla_conditional is True
+    blanket = Policy.from_dict(policy_from_text("## Legal\n\nSign the CLA first.\n").to_dict())
+    assert blanket.cla is True and blanket.cla_conditional is False
+
+
+# --- 0.1.1: generic AI-attribution trailer bans ------------------------------------
+
+
+@pytest.mark.parametrize(
+    ("text", "path"),
+    [
+        ("## Commits\n\n- No AI attribution/authorship trailers.\n", "CONTRIBUTING.md"),
+        ("## Git\n\n- No AI attribution or authorship trailers in commit messages.\n", "AGENTS.md"),
+        ("## Git commit conventions\n\n- Never add any AI-attribution trailers to commit messages.\n", "AGENTS.md"),
+        ("## AI tools\n\nDo not add AI trailers of any kind to your commits.\n", "CONTRIBUTING.md"),
+    ],
+)
+def test_generic_ai_trailer_ban_bans_assisted_by_and_co_author(text, path):
+    p = policy_from_text(text, path=path)
+    assert p.assisted_by == "banned", [(e.rule, e.quote) for e in p.evidence]
+    assert p.co_authored_by_ai == "banned"
+
+
+def test_openmetadata_style_co_author_and_attribution_trailers():
+    # Modelled on OpenMetadata's AGENTS.md: the co-author ban is explicit, the Assisted-by ban is generic.
+    p = policy_from_text(
+        '## Git commit conventions\n\n- Never add "Co-Authored-By" lines or any AI-attribution trailers to commit '
+        "messages.\n- The commit is authored by me; you are a tool, not a co-author.\n",
+        path="AGENTS.md",
+    )
+    assert p.assisted_by == "banned"
+    assert p.co_authored_by_ai == "banned"
+    assert not p.warnings
+
+
+def test_generic_trailer_ban_keeps_an_explicitly_allowed_co_author():
+    p = policy_from_text(
+        "## AI tools\n\nYou may credit your AI tool with `Co-authored-by`; do not add other AI-attribution trailers.\n"
+    )
+    assert p.assisted_by == "banned"
+    assert p.co_authored_by_ai == "allowed"
+
+
+def test_attribution_trailers_outside_ai_context_are_ignored():
+    p = policy_from_text("## Commits\n\nDo not add credit trailers for reviewers.\n")
+    assert p.assisted_by == "unspecified" and p.co_authored_by_ai == "unspecified"

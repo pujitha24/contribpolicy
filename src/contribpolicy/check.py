@@ -472,11 +472,12 @@ def run_check(
                 )
             )
     if policy.cla:
-        add(
-            Finding(
-                "cla", "The human author must have signed the CLA", "author", severity="reminder", evidence=ev("cla")
-            )
+        msg = (
+            "The project asks for a CLA only for some changes (see the source); check whether this one needs it"
+            if policy.cla_conditional
+            else "The human author must have signed the CLA"
         )
+        add(Finding("cla", msg, "author", severity="reminder", evidence=ev("cla")))
 
     # --- Issues, labels, assignment ------------------------------------------
     needs_issue = policy.issue_first or policy.assignment_required or bool(policy.required_labels)

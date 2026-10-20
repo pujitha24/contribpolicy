@@ -102,7 +102,8 @@ def _summary_rows(p: Policy) -> list[tuple[str, str]]:
     rows.append(
         (
             "DCO / CLA / signed",
-            f"DCO {_yn(p.dco)}  ·  CLA {_yn(p.cla)}  ·  signed+verified commits {_yn(p.signed_commits)}",
+            f"DCO {_yn(p.dco)}  ·  CLA {'only for some changes' if p.cla_conditional else _yn(p.cla)}"
+            f"  ·  signed+verified commits {_yn(p.signed_commits)}",
         )
     )
     rows.append(("UI screenshots", "required" if p.ui_screenshots_required else "-"))
@@ -230,7 +231,9 @@ def render_agents_md(p: Policy) -> str:
         add(f"A human must write {HUMAN_ONLY_TEXT[h]}; do not generate or post them.", "human_only." + h)
     if p.dco:
         add("Sign off every commit (`git commit -s`) with the human's name and email, never the agent's.", "dco")
-    if p.cla:
+    if p.cla_conditional:
+        add("The human contributor may need to sign the CLA; the project asks for it only for some changes.", "cla")
+    elif p.cla:
         add("The human contributor must have signed the CLA.", "cla")
     if p.signed_commits:
         add("Commits must be cryptographically signed (GPG/SSH) and show as Verified.", "signed_commits")

@@ -15,7 +15,7 @@ The rules also differ from project to project. Flux *requires* an `Assisted-by:`
 ## 30-second quick start
 
 ```console
-$ pipx install git+https://github.com/pujitha24/contribpolicy@v0.1.0   # PyPI release coming soon
+$ pipx install contribpolicy                   # from PyPI (or: pip install contribpolicy)
 
 $ contribpolicy show thanos-io/thanos          # any public repo, via the GitHub API
 $ contribpolicy show .                         # a local checkout
@@ -25,6 +25,8 @@ $ contribpolicy agents-md kubernetes-sigs/kueue      # a rules block to paste in
 
 $ contribpolicy check kubernetes-sigs/kueue --pr-body body.md --git-range origin/main..HEAD
 ```
+
+Until the PyPI release is live, install from the Git tag instead: `pipx install git+https://github.com/pujitha24/contribpolicy@v0.1.1`.
 
 No token is needed. Without one, GitHub allows 60 API requests an hour, and one `show` uses about 4 to 10 of them (file contents come from `raw.githubusercontent.com`, which does not count). Set `GITHUB_TOKEN`, or log in with `gh auth login`, to raise the limit. Python 3.10+ and no runtime dependencies.
 
@@ -84,7 +86,7 @@ NOTE  cla: The human author must have signed the CLA [author]
 3 violation(s), 0 warning(s)
 ```
 
-[`docs/examples/`](docs/examples/) has full `show` output (table, JSON and `agents-md`) for Kueue, Thanos, Jaeger, Cortex, Radius, Microsoft Agent Framework, Grafana Mimir, Flux, Tekton Pipelines and a repository without an AI policy.
+[`docs/examples/`](https://github.com/pujitha24/contribpolicy/tree/main/docs/examples) has full `show` output (table, JSON and `agents-md`) for Kueue, Thanos, Jaeger, Cortex, Radius, Microsoft Agent Framework, Grafana Mimir, Flux, Tekton Pipelines and a repository without an AI policy.
 
 ## What it detects
 
@@ -99,13 +101,13 @@ NOTE  cla: The human author must have signed the CLA [author]
 | `required_labels` | AND of OR-groups | `` labeled `triaged` and either `help wanted` or `good first issue` `` → `[["triaged"], ["help wanted", "good first issue"]]` |
 | `assignment_required` | bool | "PRs from contributors who are not assigned to the issue will be closed" (but not "we do not assign issues" or "must not be assigned to someone else") |
 | `issue_first` | bool | "Before making any significant changes, please open an issue" |
-| `dco` / `cla` / `signed_commits` | bool | `Signed-off-by` / DCO; Contributor License Agreement / EasyCLA; "signed **and verified**", GPG/SSH, Verified badge (a DCO sign-off is *not* a signed commit) |
+| `dco` / `cla` / `signed_commits` | bool | `Signed-off-by` / DCO; Contributor License Agreement / EasyCLA; "signed **and verified**", GPG/SSH, Verified badge (a DCO sign-off is *not* a signed commit). A CLA asked for only for some changes ("only for larger changes") is `cla: true` with a `cla.conditional` evidence entry |
 | `ui_screenshots_required` | bool | "attach screenshots or a recording for UI changes" |
 | evidence-only `guidance.*` | | run tests locally, be able to explain the change, keep AI-assisted PRs small, review AI output yourself |
 
 Every value comes with `evidence`: the rule id, a quote of at most 240 characters, the source path and the line number.
 
-Things it deliberately does **not** count as a policy: a project that merely mentions an AI product ("Copilot code review runs on every PR"), "AI" inside other words (`MAIL`, `AIX`, `OpenAI`), `Co-authored-by` used to credit human pair programmers, prose such as "assisted by AI" (only the hyphenated trailer counts), rules under a "Good use of AI" heading, qualified rules ("do not post *bulk* AI-generated comments"), and "label X *or* explicit maintainer agreement" (not a hard label requirement).
+Things it deliberately does **not** count as a policy: a project that merely mentions an AI product ("Copilot code review runs on every PR"), "AI" inside other words (`MAIL`, `AIX`, `OpenAI`), `Co-authored-by` used to credit human pair programmers, prose such as "assisted by AI" (only the hyphenated trailer counts), rules under a "Good use of AI" heading, qualified rules ("do not post *bulk* AI-generated comments"), "label X *or* explicit maintainer agreement" (not a hard label requirement), the Apache license header's "under one or more contributor license agreements" (not a CLA rule), the agreement a project does *not* use ("we use the DCO instead of a CLA"), and a maintainer's "sign-off" on a change (not the DCO).
 
 ### Where it looks
 
@@ -138,7 +140,7 @@ Identical documents (for example a `CLAUDE.md` that duplicates `AGENTS.md`) are 
 }
 ```
 
-`disclosure.example` is `""` when no example was found. `where` lists every channel the sources mention; it does not say whether they are alternatives (Tekton) or all required (Flux), so read the evidence. Sources from the org registry have paths of the form `registry:<repo>:<path>` and their `url` is the registry's canonical link; sources from the `<owner>/.github` fallback look like `<owner>/.github:<path>`.
+`disclosure.example` is `""` when no example was found. `cla` stays a boolean so that the companion Action can read the file; when every CLA statement is conditional, the evidence entry has the rule `cla.conditional` instead of `cla`, and the table shows "CLA only for some changes". `where` lists every channel the sources mention; it does not say whether they are alternatives (Tekton) or all required (Flux), so read the evidence. Sources from the org registry have paths of the form `registry:<repo>:<path>` and their `url` is the registry's canonical link; sources from the `<owner>/.github` fallback look like `<owner>/.github:<path>`.
 
 ## `check`: lint a draft PR
 
@@ -170,7 +172,7 @@ jobs:
       - uses: actions/checkout@<full-commit-sha>   # pin to a SHA
         with:
           fetch-depth: 0
-      - run: pipx install git+https://github.com/pujitha24/contribpolicy@v0.1.0
+      - run: pipx install contribpolicy==0.1.1
       - env:
           GITHUB_TOKEN: ${{ github.token }}
           PR_BODY: ${{ github.event.pull_request.body }}
@@ -203,7 +205,7 @@ contribpolicy check owner/repo --pr-body pr.md --git-range origin/main..HEAD --a
 
 ## The org registry
 
-Some organisations publish one policy for all of their repositories and do not copy it into each one. The registry in [`src/contribpolicy/data/org_registry.json`](src/contribpolicy/data/org_registry.json) maps a GitHub organisation to the **document** that holds its policy. The document is fetched at run time and goes through the same extractor as repository files, so the registry records *where* the rules are, never a hand-written copy of them, and evidence lines point into the real document.
+Some organisations publish one policy for all of their repositories and do not copy it into each one. The registry in [`src/contribpolicy/data/org_registry.json`](https://github.com/pujitha24/contribpolicy/blob/main/src/contribpolicy/data/org_registry.json) maps a GitHub organisation to the **document** that holds its policy. The document is fetched at run time and goes through the same extractor as repository files, so the registry records *where* the rules are, never a hand-written copy of them, and evidence lines point into the real document.
 
 | Entry | Organisations | Source |
 | --- | --- | --- |
@@ -260,6 +262,8 @@ python scripts/smoke.py                    # regenerate docs/examples/
 ruff check . && ruff format --check .
 ```
 
+Releases are published to PyPI from GitHub Actions with Trusted Publishing; see [`docs/RELEASING.md`](https://github.com/pujitha24/contribpolicy/blob/main/docs/RELEASING.md) and the [changelog](https://github.com/pujitha24/contribpolicy/blob/main/CHANGELOG.md).
+
 The test fixtures in `tests/fixtures/` are synthetic documents written for this project, modelled on the shapes of real 2026 policies, not copies of them.
 
 ## Why this exists
@@ -270,4 +274,4 @@ In the spirit of the subject: this project was developed with AI coding assistan
 
 ## License
 
-[MIT](LICENSE) © 2026 Pujitha Paladugu
+[MIT](https://github.com/pujitha24/contribpolicy/blob/main/LICENSE) © 2026 Pujitha Paladugu

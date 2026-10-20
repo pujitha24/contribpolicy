@@ -132,3 +132,15 @@ def test_agents_md_banned_and_empty():
     assert "assigned" in w and "open or find an issue" in w
     d = render.render_agents_md(Policy(repo="x", disclosure_required=True, cla=True))
     assert "- Disclose AI assistance." in d and "CLA" in d
+
+
+def test_conditional_cla_in_table_and_agents_md():
+    from conftest import policy_from_text
+
+    p = policy_from_text("## Legal\n\nA CLA is only required for larger changes.\n")
+    assert "CLA only for some changes" in render.render(p, "table")
+    agents = render.render_agents_md(p)
+    assert "may need to sign the CLA" in agents and "must have signed the CLA" not in agents
+    blanket = policy_from_text("## Legal\n\nAll contributors must sign the CLA.\n")
+    assert "CLA yes" in render.render(blanket, "table")
+    assert "must have signed the CLA" in render.render_agents_md(blanket)

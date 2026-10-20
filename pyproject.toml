@@ -4,7 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "contribpolicy"
-version = "0.1.0"
+# The version lives in src/contribpolicy/_meta.py (VERSION) and is read from there at build time.
+dynamic = ["version"]
 description = "Find a repository's rules for AI-assisted contributions (disclosure, trailers, human-only replies, labels, DCO...) and lint a draft PR against them. Deterministic, no API key."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -30,16 +31,21 @@ dependencies = []
 
 [project.urls]
 Homepage = "https://github.com/pujitha24/contribpolicy"
+Source = "https://github.com/pujitha24/contribpolicy"
 Issues = "https://github.com/pujitha24/contribpolicy/issues"
+Changelog = "https://github.com/pujitha24/contribpolicy/blob/main/CHANGELOG.md"
 
 [project.scripts]
 contribpolicy = "contribpolicy.cli:main"
+
+[tool.hatch.version]
+path = "src/contribpolicy/_meta.py"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/contribpolicy"]
 
 [tool.hatch.build.targets.sdist]
-include = ["src", "tests", "README.md", "LICENSE", "pyproject.toml", "requirements-dev.txt"]
+include = ["/src", "/tests", "/README.md", "/CHANGELOG.md", "/LICENSE", "/pyproject.toml", "/requirements-dev.txt"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
