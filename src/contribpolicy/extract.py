@@ -172,6 +172,33 @@ _HUMAN = re.compile(
     r"\bnot\s+(?:be\s+)?(?:AI|machine)[- ]generated\b|\bbe\s+your\s+own\b"
 )
 _SEGMENT_SPLIT = re.compile(r"(?i);|\band\b|,\s*but\b")
+# "Resource recommendations must be created by human beings": that text must come from a person.
+# Only "human(s)", "human beings" and "a (real) person" count; "made by people who ..." does not.
+_HUMAN_MADE = re.compile(
+    r"(?i)\b(?:created|made|written|authored|submitted|composed|produced|filed|opened|prepared)\s+by\s+"
+    r"(?:(?:an?|real|actual|living)\s+)*(?:human\s+beings?|humans?|persons?)\b"
+)
+_NOT_OBLIGED = re.compile(
+    r"(?i)\bneed\s+not\s+be\b|\b(?:do\s+not|don['’]t|does\s+not|doesn['’]t)\s+(?:have|need)\s+to\s+be\b"
+)
+# A leading concession ("Although resources may be written by an agent, ...") is not the subject.
+_CONCESSION = re.compile(r"(?i)^\W*(?:although|though|even\s+though|even\s+if|while|whereas)\b[^,]*,\s*")
+_HM_TARGETS = (
+    (
+        "issues",
+        re.compile(
+            r"(?i)\b(?:issues?(?:\s+reports?)?|bug\s+reports?|(?:resource\s+)?recommendations?|feature\s+requests?)\b"
+        ),
+    ),
+    ("pr-description", _T_DESC),
+    ("commit-messages", _T_COMMIT),
+    ("review-replies", _T_REVIEW),
+)
+# The rule covers a whole contribution (not one part of it, like the description): AI use is restricted.
+_HM_CONTRIBUTION = re.compile(
+    r"(?i)\b(?:pull\s+requests?|PRs?|merge\s+requests?)\b(?!\s+(?:descriptions?|bod(?:y|ies)|titles?|comments?|"
+    r"reviews?|templates?|replies))|\b(?:contributions?|patches|submissions?|(?:resource\s+)?recommendations?)\b"
+)
 
 # Policy stance ----------------------------------------------------------------
 _AI_NOUN = (
@@ -274,7 +301,7 @@ _DCO = re.compile(
     r"\bDCO\b|(?i:developer\s+certificate\s+of\s+origin|signed-off-by|\bsign[- ]?off\b|\bsignoff\b|git\s+commit\s+(?:-\w*\s+)*-s\b|--signoff)"
 )
 _LEGAL_NOT = re.compile(
-    r"(?i)\b(?:do\s+not|don['’]t|does\s+not|doesn['’]t|no\s+longer)\s+(?:have|use|require|need|enforce|ask\s+for)\b"
+    r"(?i)\b(?:do\s+not|don['’]t|does\s+not|doesn['’]t|no\s+longer)\s+(?:\w+ly\s+)?(?:have|use|require|need|enforce|ask\s+for)\b"
     r"[^.]{0,30}\b(?:CLA|contributor\s+license|DCO|developer\s+certificate|sign-?off|signed-off-by)"
 )
 _DCO_NOT = re.compile(
@@ -290,6 +317,20 @@ _ALT_LEAD = (
     r"(?:switched|moved|migrated)\s+(?:away\s+)?from)\s+(?:(?:signing|using|requiring)\s+)?(?:an?\s+|the\s+|any\s+|our\s+)?"
 )
 _CLA_ALT = re.compile(_ALT_LEAD + r"(?:CLA|EasyCLA|contributor\s+license\s+agreements?)\b")
+# "We use the DCO, not a CLA" / "(not a CLA)": only after a comma, bracket, dash, "and" or "but", so that
+# "if you are not a CLA signer yet" still reads as a CLA rule.
+_CLA_NOT_USED = re.compile(
+    r"(?i)(?:[,(—–]|\s-\s|\b(?:and|but))\s*not\s+(?:an?\s+|the\s+|any\s+)?(?:CLA|EasyCLA|contributor\s+license\s+agreements?)\b"
+)
+# "No extra CLA needed", "no separate CLA".
+_NO_CLA = re.compile(
+    r"(?i)\bno\s+(?:(?:formal|extra|additional|separate|further|other|individual)\s+)?(?:CLA|contributor\s+license)\b"
+)
+# "无需额外 CLA" (no extra CLA needed), "不需要 CLA" / "不需要签署 CLA" (no need to sign a CLA).
+_CLA_ZH_NOT = re.compile(
+    r"(?:无需|无须|不需要|不需|不用|不必|不要求|没有)(?:再|另外|额外|单独)?(?:签署|签订|签)?(?:额外|另外|单独)?的?\s*"
+    r"(?:CLA|贡献者许可协议)"
+)
 _DCO_ALT = re.compile(
     _ALT_LEAD + r"(?:DCO|developer\s+certificate\s+of\s+origin|sign[- ]?offs?|signoffs?|signed-off-by)"
     r"(?:[- ]sign[- ]?offs?)?(?:\s+(?:lines?|trailers?))?\b"
@@ -566,10 +607,28 @@ def _target_qualified(text: str, match: re.Match[str]) -> bool:
     return bool(_QUAL.search(text[seg_start:start]))
 
 
+def _human_made(ctx: _Ctx, acc: _Acc) -> None:
+    """ "<X> must be created by human beings": X is human-only; a whole contribution type restricts AI use."""
+    for clause in _clauses(ctx.text):
+        m = _HUMAN_MADE.search(clause)
+        if not m or not _REQ.search(clause) or _NOT_REQUIRED.search(clause) or _NOT_OBLIGED.search(clause):
+            continue
+        subject = _CONCESSION.sub("", clause[: m.start()])
+        for name, rx in _HM_TARGETS:
+            if rx.search(subject):
+                acc.human_only.add(name)
+                acc.add(f"human_only.{name}", ctx, name)
+        if _HM_CONTRIBUTION.search(subject):
+            acc.stance.setdefault("restricted", []).append(acc.add("ai_use", ctx, "restricted"))
+
+
 def _human_only(ctx: _Ctx, acc: _Acc) -> None:
     if not ctx.ai:
         return
     text = ctx.text
+    _human_made(ctx, acc)
+    if _NOT_OBLIGED.search(text):  # "issues do not have to be written by humans" forbids nothing
+        return
     explicit_neg = bool(_NEG.search(text))
     if ctx.polarity > 0 and not explicit_neg:
         return
@@ -691,26 +750,28 @@ def _workflow(ctx: _Ctx, acc: _Acc) -> None:
             acc.add("issue_first", ctx, "true")
     # DCO / CLA
     if u.kind != "heading":
-        dco_text = _APPROVAL_SIGNOFF.sub(" ", _DCO_ALT.sub(" ", text))
-        if (
-            _DCO.search(dco_text)
-            and not _DCO_NOT.search(text)
-            and not _LEGAL_NOT.search(text)
-            and not _NOT_REQUIRED.search(text)
-        ):
-            acc.flags["dco"] = True
-            acc.add("dco", ctx, "true")
-        cla_text = _CLA_ALT.sub(" ", _APACHE_HEADER.sub(" ", text))
+        # Negations are read per clause: "we don't require a CLA, but sign off every commit" is a DCO rule.
+        for clause in _clauses(text):
+            dco_text = _APPROVAL_SIGNOFF.sub(" ", _DCO_ALT.sub(" ", clause))
+            if (
+                _DCO.search(dco_text)
+                and not _DCO_NOT.search(clause)
+                and not _LEGAL_NOT.search(clause)
+                and not _NOT_REQUIRED.search(clause)
+            ):
+                acc.flags["dco"] = True
+                acc.add("dco", ctx, "true")
+                break
+        cla_text = _CLA_ZH_NOT.sub(" ", _CLA_NOT_USED.sub(" ", _CLA_ALT.sub(" ", _APACHE_HEADER.sub(" ", text))))
         if _CLA.search(cla_text):
             if _CLA_CONDITIONAL.search(cla_text):
                 # The schema's `cla` is a boolean shared with the GitHub Action, so a conditional CLA is
                 # reported as `cla: true` with a `cla.conditional` evidence entry that carries the condition.
                 acc.flags["cla_conditional"] = True
                 acc.add("cla.conditional", ctx, "conditional")
-            elif (
-                not _NOT_REQUIRED.search(text)
-                and not _LEGAL_NOT.search(text)
-                and not re.search(r"(?i)\bno\s+(?:formal\s+)?(?:CLA|contributor\s+license)\b", text)
+            elif any(
+                _CLA.search(c) and not _NOT_REQUIRED.search(c) and not _LEGAL_NOT.search(c) and not _NO_CLA.search(c)
+                for c in _clauses(cla_text)
             ):
                 acc.flags["cla"] = True
                 acc.add("cla", ctx, "true")

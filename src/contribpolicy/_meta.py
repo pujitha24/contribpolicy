@@ -6,6 +6,6 @@ directory / ``[project]`` table in pyproject.toml). Everything user-facing
 """
 
 TOOL_NAME = "contribpolicy"
-VERSION = "0.1.1"
+VERSION = "0.1.2"
 HOMEPAGE = "https://github.com/pujitha24/contribpolicy"
 SCHEMA_VERSION = 1

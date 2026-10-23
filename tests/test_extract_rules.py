@@ -522,3 +522,100 @@ def test_generic_trailer_ban_keeps_an_explicitly_allowed_co_author():
 def test_attribution_trailers_outside_ai_context_are_ignored():
     p = policy_from_text("## Commits\n\nDo not add credit trailers for reviewers.\n")
     assert p.assisted_by == "unspecified" and p.co_authored_by_ai == "unspecified"
+
+
+# --- 0.1.2: human-made rules ---------------------------------------------------------
+
+
+def test_recommendations_created_by_human_beings_fixture():
+    # Modelled on awesome-claude-code: the listed resources may be agent-written, the recommendation may not.
+    text = (FIXTURES / "human_made" / "CONTRIBUTING.md").read_text()
+    p = extract("acme/awesome", [Doc(Source("CONTRIBUTING.md", "", "repo"), text, role="contributing")])
+    assert p.human_only == ["issues"]
+    assert p.ai_use == "restricted"
+    assert [e.line for e in ev(p, "human_only.issues")] == [15]
+    assert [e.line for e in ev(p, "ai_use")] == [15]
+    # "Treat the maintainers as human beings" and "triaged by humans" are not rules.
+    assert all(e.line == 15 for e in p.evidence if e.rule.startswith(("human_only", "ai_use")))
+
+
+@pytest.mark.parametrize(
+    ("text", "human_only", "ai_use"),
+    [
+        (
+            "Although resources may be written by a coding agent, resource recommendations must be created by "
+            "human beings.",
+            ["issues"],
+            "restricted",
+        ),
+        ("Bug reports must be written by humans, not by AI tools.", ["issues"], "allowed"),
+        ("Pull request descriptions must be written by a human, never by an AI agent.", ["pr-description"], "allowed"),
+        ("Pull requests must be opened by a human, even when AI tools wrote the code.", [], "restricted"),
+        ("AI-assisted submissions must be made by a real person.", [], "restricted"),
+        # Not rules: no normative verb, a negated requirement, or "human" in another sense.
+        ("AI tools are fine; issues created by humans get the needs-triage label.", [], "unspecified"),
+        ("AI-written issues do not have to be written by humans if a maintainer asked for them.", [], "unspecified"),
+        ("AI notes: commit messages should be human-readable.", [], "unspecified"),
+        ("AI tools are fine, but every PR is reviewed by a human maintainer.", [], "unspecified"),
+        ("AI chatbots are not maintainers; treat maintainers as human beings.", [], "unspecified"),
+        ("AI release notes must be made by people with commit access.", [], "unspecified"),
+    ],
+)
+def test_human_made_rules(text, human_only, ai_use):
+    p = policy_from_text(f"## AI use\n\n{text}\n")
+    assert p.human_only == human_only, [(e.rule, e.quote) for e in p.evidence]
+    assert p.ai_use == ai_use, [(e.rule, e.quote) for e in p.evidence]
+
+
+def test_human_made_rule_needs_ai_context():
+    p = policy_from_text("## Process\n\nRelease announcements must be written by humans.\n")
+    assert p.human_only == [] and p.ai_use == "unspecified"
+
+
+# --- 0.1.2: more CLA misreads (discovery round 2) -------------------------------------
+
+
+@pytest.mark.parametrize(
+    ("text", "dco"),
+    [
+        ("We use the DCO, not a CLA.", True),
+        ("We use the DCO (not a CLA) for every contribution.", True),
+        ("We don't explicitly require a CLA.", False),
+        ("We do not formally require a Contributor License Agreement.", False),
+        ("No extra CLA needed.", False),
+        ("No extra CLA needed - the DCO sign-off is enough.", True),
+        ("No separate CLA is required; sign off your commits (DCO).", True),
+        ("本项目使用 DCO，无需额外 CLA。", True),
+        ("提交前不需要 CLA。", False),
+        ("不需要签署 CLA，只需要 DCO 签名。", True),
+    ],
+)
+def test_cla_not_required_variants(text, dco):
+    p = policy_from_text(f"## Legal\n\n{text}\n")
+    assert p.cla is False, [(e.rule, e.quote) for e in p.evidence]
+    assert ev(p, "cla") == [] and ev(p, "cla.conditional") == []
+    assert p.dco is dco
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "You must sign the CLA, not just the DCO.",
+        "If you are not a CLA signer yet, sign it before your PR is reviewed.",
+        "贡献前需要签署 CLA。",
+        "Sign the CLA; no extra paperwork is needed after that.",
+    ],
+)
+def test_real_cla_rules_still_count(text):
+    p = policy_from_text(f"## Legal\n\n{text}\n")
+    assert p.cla is True and p.cla_conditional is False, [(e.rule, e.quote) for e in p.evidence]
+
+
+def test_cla_negation_in_one_clause_keeps_dco_in_another():
+    p = policy_from_text("## Legal\n\nWe don't explicitly require a CLA, but all commits must be signed off (DCO).\n")
+    assert p.cla is False and p.dco is True
+
+
+def test_not_obliged_guard_is_narrow():
+    p = policy_from_text("## AI\n\nYou don't need to open an issue first, but do not use AI to write issues.\n")
+    assert p.human_only == ["issues"]

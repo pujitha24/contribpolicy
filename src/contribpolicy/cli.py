@@ -9,6 +9,7 @@ import sys
 from collections.abc import Sequence
 from pathlib import Path
 
+from . import hook as hook_mod
 from . import render
 from ._meta import TOOL_NAME, VERSION
 from .check import git_commits, parse_commits, run_check
@@ -89,6 +90,15 @@ def build_parser() -> argparse.ArgumentParser:
     am = sub.add_parser("agents-md", help="print a short rules block to paste into an agent's context")
     _add_discovery_args(am)
 
+    hook = sub.add_parser("hook", help="run as a coding-agent hook (reads the tool call as JSON on stdin)")
+    agents = hook.add_subparsers(dest="agent", metavar="AGENT")
+    cc = agents.add_parser(
+        "claude-code",
+        help="Claude Code PreToolUse hook: check `git push` / `gh pr create` against the upstream's rules",
+        description=hook_mod.DESCRIPTION,
+    )
+    hook_mod.add_arguments(cc)
+
     reg = sub.add_parser("registry", help="list the org-level policy registry")
     reg.add_argument("--registry", metavar="FILE", help="extra registry JSON to merge")
     reg.add_argument("--format", "-f", choices=("table", "json"), default="table")
@@ -128,13 +138,25 @@ def load_policy(args: argparse.Namespace) -> Policy:
         raise UsageError("--offline needs a local path")
     gh = _github(False)
     assert gh is not None
+    return fetch_policy(gh, slug, registry, no_org=args.no_org, follow_links=not args.no_links)
+
+
+def fetch_policy(
+    gh: GitHub,
+    slug: str,
+    registry: list | None,
+    *,
+    no_org: bool = False,
+    follow_links: bool = True,
+) -> Policy:
+    """Discover and extract the policy of the GitHub repository ``slug`` (``owner/name``)."""
     info = gh.repo_info(slug)
     if info is None:
         raise UsageError(f"repository {slug} not found (or not visible without a token)")
     slug = info.get("full_name", slug)
     reader = GitHubReader(gh, slug)
-    org_reader = None if args.no_org else (lambda r: GitHubReader(gh, r))
-    found = discover(reader, slug, org_reader=org_reader, registry=registry, follow_links=not args.no_links)
+    org_reader = None if no_org else (lambda r: GitHubReader(gh, r))
+    found = discover(reader, slug, org_reader=org_reader, registry=registry, follow_links=follow_links)
     policy = extract(slug, found.docs, found.sources)
     policy.warnings = found.warnings + policy.warnings
     return policy
@@ -263,13 +285,25 @@ def cmd_registry(args: argparse.Namespace) -> int:
     return EXIT_OK
 
 
+def cmd_hook(args: argparse.Namespace) -> int:
+    if args.agent != "claude-code":
+        raise UsageError("hook needs an agent: contribpolicy hook claude-code")
+    return hook_mod.run_from_args(args)
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     ap = build_parser()
     args = ap.parse_args(argv)
     if not args.command:
         ap.print_help()
         return EXIT_ERROR
-    handlers = {"show": cmd_show, "check": cmd_check, "agents-md": cmd_agents_md, "registry": cmd_registry}
+    handlers = {
+        "show": cmd_show,
+        "check": cmd_check,
+        "agents-md": cmd_agents_md,
+        "registry": cmd_registry,
+        "hook": cmd_hook,
+    }
     try:
         return handlers[args.command](args)
     except UsageError as e:

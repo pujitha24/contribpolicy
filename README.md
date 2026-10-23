@@ -10,7 +10,7 @@ Coding agents (Claude Code, Copilot, Codex, Cursor, ...) open a lot of pull requ
 
 The rules also differ from project to project. Flux *requires* an `Assisted-by:` commit trailer; Kubernetes and Thanos *forbid* it. Jaeger lets you credit your tool with `Co-authored-by`; Flux and Kubernetes forbid it. Thanos does not want AI-written commit messages. Radius accepts automated contributions only on issues labelled `triaged` and (`help wanted` or `good first issue`). Grafana requires signed *and verified* commits in every repository. Get one of these wrong and the PR is closed, sometimes without a review.
 
-`contribpolicy` finds all of a repository's policy sources, extracts the rules **deterministically** (regular expressions and a few structural heuristics, no LLM, no API key), and prints them with evidence quotes and line numbers. It can also lint a draft PR (description plus commit messages) against those rules and exit non-zero on a violation, so it fits in a pre-push hook, a CI job or an agent harness.
+`contribpolicy` finds all of a repository's policy sources, extracts the rules **deterministically** (regular expressions and a few structural heuristics, no LLM, no API key), and prints them with evidence quotes and line numbers. It can also lint a draft PR (description plus commit messages) against those rules and exit non-zero on a violation, so it fits in a pre-push hook, a CI job or an agent harness. With [Claude Code](#use-with-claude-code) it runs as a hook that stops a `git push` or `gh pr create` that breaks the upstream's rules and tells Claude how to fix it.
 
 ## 30-second quick start
 
@@ -26,7 +26,7 @@ $ contribpolicy agents-md kubernetes-sigs/kueue      # a rules block to paste in
 $ contribpolicy check kubernetes-sigs/kueue --pr-body body.md --git-range origin/main..HEAD
 ```
 
-Until the PyPI release is live, install from the Git tag instead: `pipx install git+https://github.com/pujitha24/contribpolicy@v0.1.1`.
+Until the PyPI release is live, install from the Git tag instead: `pipx install git+https://github.com/pujitha24/contribpolicy@v0.1.2`.
 
 No token is needed. Without one, GitHub allows 60 API requests an hour, and one `show` uses about 4 to 10 of them (file contents come from `raw.githubusercontent.com`, which does not count). Set `GITHUB_TOKEN`, or log in with `gh auth login`, to raise the limit. Python 3.10+ and no runtime dependencies.
 
@@ -92,12 +92,12 @@ NOTE  cla: The human author must have signed the CLA [author]
 
 | Field | Values | Recognises, for example |
 | --- | --- | --- |
-| `ai_use` | `allowed` `disclose` `restricted` `banned` `unspecified` | "Using AI tools ... is acceptable"; "must disclose"; "automated contributors must restrict their contributions to issues labeled ..."; "we do not accept AI-generated contributions" |
+| `ai_use` | `allowed` `disclose` `restricted` `banned` `unspecified` | "Using AI tools ... is acceptable"; "must disclose"; "automated contributors must restrict their contributions to issues labeled ..."; "resource recommendations must be created by human beings" (`restricted`); "we do not accept AI-generated contributions" |
 | `disclosure.required` / `where` | `description`, `checkbox`, `commit-trailer` | "disclose this in the description of your PR"; an AI-usage checkbox group in the PR template (including the org `.github` template); "Preferred: Git commit message trailer" |
 | `disclosure.example` | text | the quoted example sentence, the `Assisted-by:` example, or the template option to tick |
 | `trailers.assisted_by` | `required` `allowed` `banned` `unspecified` | Flux's required `Assisted-by: AGENT/MODEL`; Tekton's *preferred* trailer (`allowed`); Kubernetes' ban on `assisted-by`/`co-developed` |
 | `trailers.co_authored_by_ai` | `allowed` `banned` `unspecified` | "Listing AI tooling as a co-author ... is not allowed"; "must not add Co-authored-by"; "an AI account as co-author breaks EasyCLA"; Jaeger's "up to you" |
-| `human_only` | `review-replies` `commit-messages` `pr-description` `issues` | "respond to review comments ... without relying on AI tools"; "do not use AI to generate the commit message"; "issues, pull request reviews, and discussions must be substantively human-authored"; an agent answering review feedback listed under a "Disallowed" heading |
+| `human_only` | `review-replies` `commit-messages` `pr-description` `issues` | "respond to review comments ... without relying on AI tools"; "do not use AI to generate the commit message"; "issues, pull request reviews, and discussions must be substantively human-authored"; "recommendations must be created by human beings" (`issues`); an agent answering review feedback listed under a "Disallowed" heading |
 | `required_labels` | AND of OR-groups | `` labeled `triaged` and either `help wanted` or `good first issue` `` → `[["triaged"], ["help wanted", "good first issue"]]` |
 | `assignment_required` | bool | "PRs from contributors who are not assigned to the issue will be closed" (but not "we do not assign issues" or "must not be assigned to someone else") |
 | `issue_first` | bool | "Before making any significant changes, please open an issue" |
@@ -107,7 +107,7 @@ NOTE  cla: The human author must have signed the CLA [author]
 
 Every value comes with `evidence`: the rule id, a quote of at most 240 characters, the source path and the line number.
 
-Things it deliberately does **not** count as a policy: a project that merely mentions an AI product ("Copilot code review runs on every PR"), "AI" inside other words (`MAIL`, `AIX`, `OpenAI`), `Co-authored-by` used to credit human pair programmers, prose such as "assisted by AI" (only the hyphenated trailer counts), rules under a "Good use of AI" heading, qualified rules ("do not post *bulk* AI-generated comments"), "label X *or* explicit maintainer agreement" (not a hard label requirement), the Apache license header's "under one or more contributor license agreements" (not a CLA rule), the agreement a project does *not* use ("we use the DCO instead of a CLA"), and a maintainer's "sign-off" on a change (not the DCO).
+Things it deliberately does **not** count as a policy: a project that merely mentions an AI product ("Copilot code review runs on every PR"), "AI" inside other words (`MAIL`, `AIX`, `OpenAI`), `Co-authored-by` used to credit human pair programmers, prose such as "assisted by AI" (only the hyphenated trailer counts), rules under a "Good use of AI" heading, qualified rules ("do not post *bulk* AI-generated comments"), "label X *or* explicit maintainer agreement" (not a hard label requirement), the Apache license header's "under one or more contributor license agreements" (not a CLA rule), the agreement a project does *not* use or need ("we use the DCO instead of a CLA", "the DCO, not a CLA", "we don't explicitly require a CLA", "no extra CLA needed", "无需额外 CLA"), a maintainer's "sign-off" on a change (not the DCO), and "human" in other senses ("treat maintainers as human beings", "issues are triaged by humans").
 
 ### Where it looks
 
@@ -156,6 +156,33 @@ contribpolicy check --policy policy.json --pr-body - < body.md     # offline, fr
 - Rules that text cannot verify, such as "write review replies yourself" or "sign the CLA", are printed as `NOTE` reminders and never fail the run.
 - Exit codes: `0` no violations, `1` violations, `2` usage, network or rate-limit error. `--format json` gives machine-readable results.
 
+## Use with Claude Code
+
+`contribpolicy hook claude-code` is a Claude Code [`PreToolUse` hook](https://code.claude.com/docs/en/hooks). Before Claude runs `git push` or `gh pr create`, it finds the upstream repository, collects the commits being pushed (and the PR body), and runs the same checks as `check`. A violation **blocks the command**, and Claude gets a reason it can act on:
+
+```text
+contribpolicy blocked this command: 1 contribution-rule violation(s).
+1. acme/widgetron bans `Assisted-by`, `Co-developed-by` and similar AI commit trailers (CONTRIBUTING.md:18): AI attribution trailer is not allowed: 'Assisted-by: Claude Code' [commit a206a722eb]. Fix: remove the trailer from that commit: `git rebase -i a895d6d3d946` and `reword` it (or `git commit --amend` if it is the last commit) and disclose the AI assistance in the PR description instead.
+   Rule text: "Naming an AI tool as a co-author, co-signing commits with an AI tool, or adding an `assisted-by`, `co-developed` or similar commit trailer is not allowed."
+```
+
+Warnings and reminders (sign the CLA, write review replies yourself) reach Claude as context without blocking. The hook fails open: if it cannot check (no network, no upstream ref), the command goes ahead and Claude is told the check did not run. Every other command exits immediately. Add this to `~/.claude/settings.json`:
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [{ "type": "command", "command": "contribpolicy hook claude-code", "timeout": 60 }]
+      }
+    ]
+  }
+}
+```
+
+There is also a [skill](https://github.com/pujitha24/contribpolicy/blob/main/integrations/claude-code/SKILL.md) that has Claude read a repository's rules with `agents-md` before it starts work there. [`docs/claude-code.md`](https://github.com/pujitha24/contribpolicy/blob/main/docs/claude-code.md) covers installation, what is checked, per-repository settings (`git config contribpolicy.hook false` turns it off for one repository), offline use and limitations.
+
 ## Using it in CI, hooks and agent harnesses
 
 **GitHub Actions**, checking the PR that triggered the workflow:
@@ -172,7 +199,7 @@ jobs:
       - uses: actions/checkout@<full-commit-sha>   # pin to a SHA
         with:
           fetch-depth: 0
-      - run: pipx install contribpolicy==0.1.1
+      - run: pipx install contribpolicy==0.1.2
       - env:
           GITHUB_TOKEN: ${{ github.token }}
           PR_BODY: ${{ github.event.pull_request.body }}

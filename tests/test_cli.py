@@ -67,7 +67,7 @@ def test_version(capsys):
     with pytest.raises(SystemExit) as e:
         cli.main(["--version"])
     assert e.value.code == 0
-    assert "contribpolicy 0.1.1" in capsys.readouterr().out
+    assert "contribpolicy 0.1.2" in capsys.readouterr().out
 
 
 @pytest.mark.parametrize("fmt", ["table", "json", "yaml", "markdown"])

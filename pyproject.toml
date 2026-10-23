@@ -36,7 +36,7 @@ Issues = "https://github.com/pujitha24/contribpolicy/issues"
 Changelog = "https://github.com/pujitha24/contribpolicy/blob/main/CHANGELOG.md"
 
 [project.scripts]
-contribpolicy = "contribpolicy.cli:main"
+contribpolicy = "contribpolicy._entry:main"
 
 [tool.hatch.version]
 path = "src/contribpolicy/_meta.py"
@@ -45,7 +45,7 @@ path = "src/contribpolicy/_meta.py"
 packages = ["src/contribpolicy"]
 
 [tool.hatch.build.targets.sdist]
-include = ["/src", "/tests", "/README.md", "/CHANGELOG.md", "/LICENSE", "/pyproject.toml", "/requirements-dev.txt"]
+include = ["/src", "/tests", "/integrations", "/docs/claude-code.md", "/README.md", "/CHANGELOG.md", "/LICENSE", "/pyproject.toml", "/requirements-dev.txt"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
