@@ -1,5 +1,10 @@
 # contribpolicy
 
+[![CI](https://github.com/pujitha24/contribpolicy/actions/workflows/ci.yml/badge.svg)](https://github.com/pujitha24/contribpolicy/actions/workflows/ci.yml)
+![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)
+![No runtime dependencies](https://img.shields.io/badge/runtime%20dependencies-none-brightgreen)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
 **Find a repository's rules for AI-assisted contributions, with the sentence and line each rule came from. Then lint your PR against them.**
 
 Coding agents (Claude Code, Copilot, Codex, Cursor, ...) open a lot of pull requests now, and open-source projects have answered with written rules for AI-assisted work. The rules are reasonable. They are also scattered:
@@ -298,6 +303,10 @@ The test fixtures in `tests/fixtures/` are synthetic documents written for this 
 I built this while running AI-assisted contributions to open-source projects and learning these rules the hard way. Pull requests were closed for breaking a rule that was written down, just not in the file I had read: a trailer that one project asks for and the next one forbids, a policy kept at the organisation level, a checkbox in a template that lives in another repository. Maintainers are right to expect contributors to know their rules. This tool makes those rules quick to find and hard to miss, for people and for the agents they run.
 
 In the spirit of the subject: this project was developed with AI coding assistance.
+
+## Feedback
+
+The most useful report is a rule it gets wrong. Open an issue with the repository and the sentence it misread, or a project whose policy it does not find at all. An org-level policy that lives outside the repository is a one-line addition to [the org registry](#the-org-registry).
 
 ## License
 
